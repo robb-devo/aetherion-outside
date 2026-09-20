@@ -1,0 +1,43 @@
+Aetherion Outside — SAME Desktop folder every time
+=================================================
+
+ALWAYS use this exact path (overwrite, never make a new copy):
+
+  C:\Users\Robbi\Desktop\Aetherion Outside\
+
+DO NOT create:
+  Aetherion Outside (2)
+  Aetherion Outside - Copy
+  Aetherion Outside new
+  …or any second folder.
+
+HOW TO UPDATE
+  1. Download / copy the repo folder  release/windows/
+  2. Paste INTO the existing Desktop folder above
+  3. When Windows asks: Replace the files in the destination
+  4. Double-click the SAME launcher as always:
+
+     C:\Users\Robbi\Desktop\Aetherion Outside\Play Aetherion Outside.vbs
+
+  Optional shortcut (also always the same name):
+     C:\Users\Robbi\Desktop\Aetherion Outside.lnk
+     (created by Pin to Desktop.vbs or first launch)
+
+WHY THIS FORMAT
+  WebGL harbour in a Chromium app window (Edge/Chrome --app).
+  One click. Same path. Updates replace game\ in place.
+
+FALLBACK
+  Aetherion Outside.bat  (shows a console)
+
+IN THE FOLDER
+  Play Aetherion Outside.vbs   <- one-click
+  Pin to Desktop.vbs           <- Desktop .lnk
+  Aetherion Outside.bat
+  launch.ps1 / serve.ps1 / serve.mjs
+  game\                        <- rebuilt in place by npm run package:windows
+
+QUIT
+  Close the game window, or title Exit. F11 fullscreen.
+
+No Minecraft. No plugins. Windows 10/11 + Edge is enough.
