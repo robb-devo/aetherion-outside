@@ -6,12 +6,14 @@ import { surfaceY } from "../game/terrain";
 import { COLORS } from "../game/palette";
 
 const SPOTS: [number, number][] = [
-  [-2.7, 1.05],
-  [-8.4, -9.6],
-  [-14.2, -13.8],
-  [-22.2, -16.2],
-  [-24.8, -19.1],
-  [-20.1, -20.6],
+  [-3.4, 1.4],
+  [-11.2, -12.5],
+  [-18.5, -18.2],
+  [-29.5, -21.5],
+  [-33.2, -25.4],
+  [-27.0, -27.2],
+  [-36.5, -22.0],
+  [2.8, -11.5],
 ];
 
 function Moonpetal({ id, xz }: { id: string; xz: [number, number] }) {

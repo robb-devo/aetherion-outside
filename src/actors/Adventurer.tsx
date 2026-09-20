@@ -60,11 +60,11 @@ export function Adventurer({ anim, animRef, attackT = 0, attackRef, palette, sca
     if (lLeg.current) lLeg.current.rotation.x = moving ? -swing * amp * 0.95 : 0;
     if (rLeg.current) rLeg.current.rotation.x = moving ? swing * amp * 0.95 : 0;
     if (torso.current) {
-      torso.current.position.y = 1.22 + (moving ? Math.abs(Math.sin(t * spd)) * 0.04 : Math.sin(t * 2.1) * 0.015);
-      torso.current.rotation.x = animNow === "run" ? 0.16 : animNow === "jump" ? -0.12 : 0.03;
+      torso.current.position.y = 1.22 + (moving ? Math.abs(Math.sin(t * spd)) * 0.022 : Math.sin(t * 1.6) * 0.008);
+      torso.current.rotation.x = animNow === "run" ? 0.12 : animNow === "jump" ? -0.1 : 0.02;
     }
     if (cloak.current) {
-      cloak.current.rotation.x = 0.18 + (moving ? 0.28 : 0.06) + Math.sin(t * 2.8) * 0.05;
+      cloak.current.rotation.x = 0.18 + (moving ? 0.22 : 0.06) + Math.sin(t * 2.2) * 0.03;
     }
     if (sword.current && animNow === "attack") {
       const a = Math.min(1, attackNow / 0.28);

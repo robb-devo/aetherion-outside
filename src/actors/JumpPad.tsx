@@ -7,8 +7,8 @@ import { COLORS } from "../game/palette";
 
 export function JumpPad() {
   const group = useRef<THREE.Group>(null);
-  const x = 8.8;
-  const z = 1.6;
+  const x = 11.5;
+  const z = 2.2;
   const y = surfaceY(x, z);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export function JumpPad() {
       ref={group}
       position={[x, y, z]}
       onClick={() => {
-        launchImpulse.current = new THREE.Vector3(2.4, 12.5, -6.5);
+        launchImpulse.current = new THREE.Vector3(3.2, 13.5, -8.5);
       }}
     >
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.08, 0]}>

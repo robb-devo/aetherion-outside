@@ -88,9 +88,10 @@ function ChannelNode({
 export function SkillNodes() {
   return (
     <group>
-      <ChannelNode id="crystal-plaza" xz={[1.35, -6.2]} kind="mine" label="Mine Amethyst Chip" yOff={0.35} />
-      <ChannelNode id="crystal-hill" xz={[-25.2, -19.1]} kind="mine" label="Mine Amethyst Chip" yOff={0.4} />
-      <ChannelNode id="fish-pier" xz={[2.4, 8.2]} kind="fish" label="Fish the dusk water" yOff={0.35} />
+      <ChannelNode id="crystal-plaza" xz={[1.8, -8.0]} kind="mine" label="Mine Amethyst Chip" yOff={0.35} />
+      <ChannelNode id="crystal-hill" xz={[-34.0, -25.2]} kind="mine" label="Mine Amethyst Chip" yOff={0.4} />
+      <ChannelNode id="crystal-yard" xz={[24.5, 0.5]} kind="mine" label="Mine Amethyst Chip" yOff={0.35} />
+      <ChannelNode id="fish-pier" xz={[3.2, 11.0]} kind="fish" label="Fish the dusk water" yOff={0.35} />
     </group>
   );
 }

@@ -156,8 +156,8 @@ export function HUD() {
         </div>
         <div className="hotkeys">
           {locked
-            ? "Right-mouse look · wheel zoom · both buttons walk"
-            : "Hold right mouse to look · WASD · 1 Strike · Tab target"}
+            ? "Right-mouse look · wheel zoom · both buttons walk · left-click Strike"
+            : "Hold right mouse to look · WASD · Left-click / 1 Strike · Tab target"}
         </div>
       </div>
 

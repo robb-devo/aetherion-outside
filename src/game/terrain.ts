@@ -3,8 +3,8 @@ import { fbm, lerp, smoothstep } from "./noise";
 import { COLORS } from "./palette";
 
 export const WORLD = {
-  size: 108,
-  segs: 96,
+  size: 168,
+  segs: 128,
   waterY: 0,
 };
 
@@ -12,32 +12,35 @@ export function heightAt(x: number, z: number) {
   const r = Math.hypot(x, z);
   const angle = Math.atan2(x, z);
 
-  let h = 1.55 * smoothstep(50, 36, r);
-  h *= smoothstep(49, 30, r);
+  let h = 1.7 * smoothstep(72, 48, r);
+  h *= smoothstep(70, 42, r);
 
-  const harbourW = Math.exp(-(angle * angle) / 0.22);
-  const harbourR = smoothstep(6, 26, r) * smoothstep(46, 28, r);
-  h -= harbourW * harbourR * 2.55;
+  const harbourW = Math.exp(-(angle * angle) / 0.28);
+  const harbourR = smoothstep(8, 34, r) * smoothstep(62, 38, r);
+  h -= harbourW * harbourR * 2.7;
 
-  const pr = Math.hypot(x, z + 3.5);
-  h = lerp(h, 1.38, smoothstep(16, 5, pr) * 0.92);
+  const pr = Math.hypot(x, z + 4);
+  h = lerp(h, 1.42, smoothstep(22, 6, pr) * 0.94);
 
-  const hr = Math.hypot(x + 24, z + 18);
-  h += 3.35 * Math.exp(-(hr * hr) / 78);
+  const hr = Math.hypot(x + 32, z + 24);
+  h += 4.1 * Math.exp(-(hr * hr) / 120);
 
-  const lr = Math.hypot(x - 20, z + 24);
-  h += 2.55 * Math.exp(-(lr * lr) / 46);
+  const lr = Math.hypot(x - 28, z + 32);
+  h += 3.1 * Math.exp(-(lr * lr) / 72);
 
-  const wr = Math.hypot(x - 22, z - 2);
-  h += 0.55 * Math.exp(-(wr * wr) / 58);
+  const wr = Math.hypot(x - 30, z - 2);
+  h += 0.65 * Math.exp(-(wr * wr) / 90);
 
-  const gate = Math.hypot(x + 6, z - 18);
-  h += 0.35 * Math.exp(-(gate * gate) / 40);
+  const gate = Math.hypot(x + 8, z - 26);
+  h += 0.45 * Math.exp(-(gate * gate) / 55);
 
-  h += (fbm(x * 0.07, z * 0.07) - 0.45) * 0.55 * smoothstep(8, 18, r);
-  h += (fbm(x * 0.18 + 8, z * 0.18) - 0.5) * 0.16;
+  const ridge = Math.hypot(x + 8, z + 8);
+  h += 0.9 * Math.exp(-(ridge * ridge) / 200) * smoothstep(18, 36, r);
 
-  if (r > 52) h = Math.min(h, -1.4);
+  h += (fbm(x * 0.055, z * 0.055) - 0.45) * 0.7 * smoothstep(10, 24, r);
+  h += (fbm(x * 0.14 + 8, z * 0.14) - 0.5) * 0.18;
+
+  if (r > 74) h = Math.min(h, -1.6);
   return h;
 }
 
@@ -45,13 +48,13 @@ export function colorAt(x: number, z: number, y: number) {
   const r = Math.hypot(x, z);
   const c = new THREE.Color();
   if (y < 0.35) c.set(COLORS.sand);
-  else if (y > 3.4) c.set("#6f7a52");
+  else if (y > 4.2) c.set("#6f7a52");
   else c.set(COLORS.grass);
-  if (r < 14 && Math.hypot(x, z + 3.5) < 12) c.set("#8d8070");
-  const wr = Math.hypot(x - 22, z - 2);
-  if (wr < 8) c.lerp(new THREE.Color("#8a7b68"), 0.45);
-  const n = fbm(x * 0.2, z * 0.2);
-  c.offsetHSL(0, 0, (n - 0.5) * 0.08);
+  if (r < 18 && Math.hypot(x, z + 4) < 16) c.set("#8d8070");
+  const wr = Math.hypot(x - 30, z - 2);
+  if (wr < 11) c.lerp(new THREE.Color("#8a7b68"), 0.45);
+  const n = fbm(x * 0.18, z * 0.18);
+  c.offsetHSL(0, 0, (n - 0.5) * 0.07);
   return c;
 }
 

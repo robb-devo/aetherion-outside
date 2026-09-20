@@ -85,19 +85,19 @@ export const NPCS: NpcDef[] = [
     id: "corin",
     name: "Harbourmaster Corin",
     title: "Keeps the dusk ledgers",
-    position: [0.85, 0, -0.55],
+    position: [1.1, 0, -0.8],
     facing: Math.PI * 0.15,
     palette: { tunic: "#4d3a24", cloak: "#6e2b2b", hair: "#cfc3a4" },
     lines: [
       "Traveler. The dusk lanterns stay dark — moonpetals unpicked, shade-rats in the wick crates.",
-      "Hill and plaza petals. Warehouse east for the rats. Three of each. Harbour pays in shards.",
+      "Plaza and north hill for petals. Warehouse east for the rats. Three of each. Harbour pays in shards.",
     ],
   },
   {
     id: "wren",
     name: "Wren",
     title: "Forager",
-    position: [-22.5, 0, -17.5],
+    position: [-30.5, 0, -23.5],
     facing: 0.4,
     palette: { tunic: "#355c3a", cloak: "#24402a", hair: "#6b3a1c" },
     lines: [
@@ -109,19 +109,19 @@ export const NPCS: NpcDef[] = [
     id: "brann",
     name: "Captain Brann",
     title: "Harbour Guard",
-    position: [18.5, 0, 1.2],
+    position: [26.5, 0, 2.2],
     facing: -1.2,
     palette: { tunic: "#3e4458", cloak: "#2a3044", hair: "#2b2118" },
     lines: [
       "Keep the blade clean. The rift-stink on those rats isn't natural.",
-      "Tab to mark one. Strike with 1. If they scatter, herd them off the pier.",
+      "Tab to mark one. Left-click or 1 to strike. If they scatter, herd them off the pier.",
     ],
   },
   {
     id: "lila",
     name: "Lila",
     title: "Shard Merchant",
-    position: [8.4, 0, -7.2],
+    position: [11.2, 0, -9.4],
     facing: -0.2,
     palette: { tunic: "#6a3d6e", cloak: "#e6c56a", hair: "#1c1210" },
     lines: [
@@ -150,14 +150,14 @@ export const VENDOR = {
 };
 
 export const LANDMARKS = [
-  { id: "plaza", name: "Harbour Plaza", x: 0, z: -4, color: "#e6c56a", radius: 10 },
-  { id: "light", name: "Lighthouse Spit", x: 20, z: -24, color: "#ffb25a", radius: 10 },
-  { id: "hall", name: "Guild Steps", x: -12, z: -8, color: "#c45c5c", radius: 8 },
-  { id: "hill", name: "Moonpetal Hill", x: -24, z: -18, color: "#7dce8a", radius: 12 },
-  { id: "yard", name: "Warehouse Yard", x: 22, z: 4, color: "#d98b4c", radius: 10 },
-  { id: "gate", name: "Eldervale Gate", x: -8, z: 18, color: "#b48cff", radius: 9 },
-  { id: "docks", name: "Dusk Docks", x: 2, z: 9, color: "#3c7f86", radius: 8 },
-  { id: "market", name: "Shard Stalls", x: 9, z: -7, color: "#c3a6ff", radius: 7 },
+  { id: "plaza", name: "Harbour Plaza", x: 0, z: -5, color: "#e6c56a", radius: 14 },
+  { id: "light", name: "Lighthouse Spit", x: 28, z: -32, color: "#ffb25a", radius: 14 },
+  { id: "hall", name: "Guild Steps", x: -16, z: -11, color: "#c45c5c", radius: 11 },
+  { id: "hill", name: "Moonpetal Hill", x: -32, z: -24, color: "#7dce8a", radius: 16 },
+  { id: "yard", name: "Warehouse Yard", x: 30, z: 5, color: "#d98b4c", radius: 14 },
+  { id: "gate", name: "Eldervale Gate", x: -10, z: 26, color: "#b48cff", radius: 12 },
+  { id: "docks", name: "Dusk Docks", x: 3, z: 12, color: "#3c7f86", radius: 11 },
+  { id: "market", name: "Shard Stalls", x: 12, z: -9, color: "#c3a6ff", radius: 9 },
 ];
 
 export const ZONE = {
@@ -166,14 +166,14 @@ export const ZONE = {
 };
 
 export const DISTANT_ISLES = [
-  { name: "Eldervale", position: [-90, 8, -70] as [number, number, number], scale: 1.4, hue: "#355c3a" },
-  { name: "Farm Isle", position: [95, 4, -20] as [number, number, number], scale: 1.0, hue: "#6d7a3b" },
-  { name: "Fishing Isle", position: [30, 3, 95] as [number, number, number], scale: 0.85, hue: "#2f5e5a" },
-  { name: "Amethyst Mines", position: [-100, 10, 20] as [number, number, number], scale: 1.15, hue: "#5b2a6e" },
+  { name: "Eldervale", position: [-120, 10, -95] as [number, number, number], scale: 1.7, hue: "#355c3a" },
+  { name: "Farm Isle", position: [125, 5, -28] as [number, number, number], scale: 1.25, hue: "#6d7a3b" },
+  { name: "Fishing Isle", position: [40, 4, 125] as [number, number, number], scale: 1.05, hue: "#2f5e5a" },
+  { name: "Amethyst Mines", position: [-130, 12, 28] as [number, number, number], scale: 1.4, hue: "#5b2a6e" },
 ];
 
 export const ABILITIES = [
-  { id: "strike", slot: 1, name: "Strike", icon: "⚔", key: "1", cooldown: 0.7 },
+  { id: "strike", slot: 1, name: "Strike", icon: "⚔", key: "LMB / 1", cooldown: 0.7 },
   { id: "interact", slot: 2, name: "Interact", icon: "✋", key: "E", cooldown: 0 },
   { id: "sprint", slot: 3, name: "Sprint", icon: "◎", key: "⇧", cooldown: 0 },
   { id: "jump", slot: 4, name: "Jump", icon: "▲", key: "Spc", cooldown: 0 },

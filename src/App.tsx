@@ -55,10 +55,11 @@ export default function App() {
     <KeyboardControls map={controls}>
       <Canvas
         shadows
-        dpr={[1, 1.75]}
-        camera={{ fov: 50, near: 0.1, far: 280, position: [14, 9, 16] }}
+        dpr={[1, 2]}
+        camera={{ fov: 48, near: 0.1, far: 420, position: [16, 10, 18] }}
         gl={{
           antialias: true,
+          powerPreference: "high-performance",
           toneMapping: THREE.ACESFilmicToneMapping,
           outputColorSpace: THREE.SRGBColorSpace,
         }}

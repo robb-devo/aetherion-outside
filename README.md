@@ -56,6 +56,7 @@ That starts Vite and opens `http://localhost:5173`. Equivalent: `npm start` then
 | Input | Action |
 | --- | --- |
 | Hold **right mouse** | Look |
+| **Left click** | Strike (primary attack) |
 | **Wheel** | Zoom |
 | **Both mouse buttons** | Walk forward |
 | WASD | Move |

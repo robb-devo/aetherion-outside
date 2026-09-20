@@ -185,7 +185,7 @@ export const useGame = create<GameState>((set, get) => ({
       zonePing: { name: "Harbour of Dusk", at: Date.now() },
     });
     get().toast("Harbourmaster Corin wants a word.", "info");
-    get().say("system", "Entered Harbour of Dusk. Right-mouse look · 1 Strike · Tab target · L quest log.");
+    get().say("system", "Entered Harbour of Dusk. Right-mouse look · Left-click Strike · Tab target · L quest log.");
   },
 
   setLocked: (locked) => set({ locked }),

@@ -15,16 +15,19 @@ const camDir = new THREE.Vector3();
 const camRight = new THREE.Vector3();
 const wish = new THREE.Vector3();
 const desiredCam = new THREE.Vector3();
-const camTarget = new THREE.Vector3();
-const camPos = new THREE.Vector3(4, 9, 14);
+const lookSmooth = new THREE.Vector3();
+const camPos = new THREE.Vector3(6, 10, 16);
 const from = new THREE.Vector3();
+const horizVel = new THREE.Vector3();
+const targetH = new THREE.Vector3();
+const nextH = new THREE.Vector3();
 
 export function Player() {
   const body = useRef<RapierRigidBody>(null);
   const group = useRef<THREE.Group>(null);
   const yaw = useRef(-0.08);
-  const pitch = useRef(0.22);
-  const dist = useRef(7.1);
+  const pitch = useRef(0.28);
+  const dist = useRef(8.2);
   const facing = useRef(0);
   const attackT = useRef(0);
   const grounded = useRef(true);
@@ -35,6 +38,9 @@ export function Player() {
   const wantTab = useRef(false);
   const rmb = useRef(false);
   const lmb = useRef(false);
+  const lmbStrikeArmed = useRef(false);
+  const lookReady = useRef(false);
+  const smoothY = useRef(0);
   const { camera, gl } = useThree();
   const { rapier, world } = useRapier();
   const [, getKeys] = useKeyboardControls();
@@ -52,10 +58,12 @@ export function Player() {
       }
       if (e.button === 0) {
         lmb.current = true;
+        // WoW-ish: left click alone = primary strike (not when both buttons = walk)
         if (!rmb.current) {
+          lmbStrikeArmed.current = true;
           const t = body.current?.translation();
           if (t) {
-            const near = registry.nearestEnemy(new THREE.Vector3(t.x, t.y, t.z), 14);
+            const near = registry.nearestEnemy(new THREE.Vector3(t.x, t.y, t.z), 16);
             if (near) st.setTarget(near.id, near.name, near.getHp(), near.getMaxHp());
           }
         }
@@ -66,17 +74,20 @@ export function Player() {
         rmb.current = false;
         if (document.pointerLockElement === el) document.exitPointerLock();
       }
-      if (e.button === 0) lmb.current = false;
+      if (e.button === 0) {
+        lmb.current = false;
+        lmbStrikeArmed.current = false;
+      }
     };
     const onMove = (e: MouseEvent) => {
       if (document.pointerLockElement !== el && !rmb.current) return;
       const st = useGame.getState();
       if (st.dialogNpc || st.panel) return;
-      yaw.current -= e.movementX * 0.0024;
-      pitch.current = THREE.MathUtils.clamp(pitch.current + e.movementY * 0.0018, -0.08, 0.92);
+      yaw.current -= e.movementX * 0.0022;
+      pitch.current = THREE.MathUtils.clamp(pitch.current + e.movementY * 0.0016, -0.05, 0.88);
     };
     const onWheel = (e: WheelEvent) => {
-      dist.current = THREE.MathUtils.clamp(dist.current + e.deltaY * 0.008, 3.4, 13.5);
+      dist.current = THREE.MathUtils.clamp(dist.current + e.deltaY * 0.008, 4.0, 16);
     };
     const onLock = () => useGame.getState().setLocked(document.pointerLockElement === el);
     el.addEventListener("contextmenu", onContext);
@@ -125,8 +136,8 @@ export function Player() {
 
   const spawn = useMemo(() => {
     const x = 0.15;
-    const z = 1.15;
-    return [x, surfaceY(x, z) + 1.35, z] as [number, number, number];
+    const z = 1.4;
+    return [x, surfaceY(x, z) + 1.4, z] as [number, number, number];
   }, []);
 
   function tryAttack() {
@@ -139,12 +150,12 @@ export function Player() {
     const t = rb.translation();
     const origin = new THREE.Vector3(t.x, t.y, t.z);
     let enemy = st.targetId ? registry.getEnemy(st.targetId) : null;
-    if (!enemy || !enemy.alive() || enemy.getPos().distanceTo(origin) > 3.1) {
-      enemy = registry.nearestEnemy(origin, 2.95);
+    if (!enemy || !enemy.alive() || enemy.getPos().distanceTo(origin) > 3.4) {
+      enemy = registry.nearestEnemy(origin, 3.2);
       if (enemy) st.setTarget(enemy.id, enemy.name, enemy.getHp(), enemy.getMaxHp());
     }
-    if (enemy && enemy.getPos().distanceTo(origin) <= 3.1) {
-      const died = enemy.hurt(22, origin);
+    if (enemy && enemy.getPos().distanceTo(origin) <= 3.4) {
+      const died = enemy.hurt(24, origin);
       sfx.hit();
       st.updateTargetHp(enemy.getHp());
       if (died) st.onRatKilled();
@@ -163,12 +174,12 @@ export function Player() {
     const ray = new rapier.Ray(origin, { x: 0, y: -1, z: 0 });
     let toi = 99;
     try {
-      const hit = world.castRay(ray, 1.3, true, undefined, undefined, undefined, rb);
+      const hit = world.castRay(ray, 1.35, true, undefined, undefined, undefined, rb);
       toi = hit ? hit.timeOfImpact : 99;
     } catch {
       toi = translation.y - surfaceY(translation.x, translation.z);
     }
-    grounded.current = toi < 1.2;
+    grounded.current = toi < 1.22;
 
     if (launchImpulse.current) {
       const imp = launchImpulse.current;
@@ -179,8 +190,9 @@ export function Player() {
     }
 
     if (translation.y < -3) {
-      rb.setTranslation({ x: 0.15, y: 5, z: 1.15 }, true);
+      rb.setTranslation({ x: 0.15, y: 5, z: 1.4 }, true);
       rb.setLinvel({ x: 0, y: 0, z: 0 }, true);
+      lookReady.current = false;
     }
 
     camDir.set(Math.sin(yaw.current), 0, Math.cos(yaw.current));
@@ -196,33 +208,50 @@ export function Player() {
     }
     const moving = mx !== 0 || mz !== 0;
     const sprint = !blocked && keys.sprint && moving;
-    const speed = sprint ? 7.4 : 4.35;
+    const speed = sprint ? 7.0 : 4.1;
     wish.set(0, 0, 0);
     wish.addScaledVector(camDir, mz);
     wish.addScaledVector(camRight, mx);
     if (wish.lengthSq() > 0) wish.normalize();
 
     const vel = rb.linvel();
+    // Smooth horizontal accel — kills the sticky / stuttery setLinvel feel
+    const accel = grounded.current ? 18 : 8;
+    horizVel.set(vel.x, 0, vel.z);
+    if (wish.lengthSq() > 0) targetH.copy(wish).multiplyScalar(speed);
+    else targetH.set(0, 0, 0);
+    nextH.copy(horizVel).lerp(targetH, 1 - Math.exp(-accel * dt));
+    // Snap when nearly stopped so we don't ice-skate
+    if (!moving && nextH.lengthSq() < 0.04) nextH.set(0, 0, 0);
+
+    let nextY = vel.y;
+    // Kill micro-bounce on trimesh while grounded
+    if (grounded.current && !keys.jump && Math.abs(vel.y) < 1.8) nextY = 0;
+
     if (!blocked && keys.jump && grounded.current) {
-      rb.setLinvel({ x: wish.x * speed, y: 7.6, z: wish.z * speed }, true);
+      nextY = 7.4;
       sfx.jump();
-    } else {
-      rb.setLinvel({ x: wish.x * speed, y: vel.y, z: wish.z * speed }, true);
+      grounded.current = false;
     }
+    rb.setLinvel({ x: nextH.x, y: nextY, z: nextH.z }, true);
 
     if (moving) facing.current = Math.atan2(wish.x, wish.z);
     if (group.current) {
-      group.current.rotation.y = THREE.MathUtils.damp(group.current.rotation.y, facing.current, 12, dt);
+      group.current.rotation.y = THREE.MathUtils.damp(group.current.rotation.y, facing.current, 10, dt);
     }
 
     if (attackT.current > 0) attackT.current += dt;
     if (attackT.current > 0.38) attackT.current = 0;
-    if (!blocked && (keys.attack || wantStrike.current)) tryAttack();
+
+    if (!blocked && (keys.attack || wantStrike.current || lmbStrikeArmed.current)) {
+      tryAttack();
+      lmbStrikeArmed.current = false;
+    }
     wantStrike.current = false;
 
     if (wantTab.current) {
       wantTab.current = false;
-      const n = registry.cycleEnemy(from.set(translation.x, translation.y, translation.z), st.targetId, 16);
+      const n = registry.cycleEnemy(from.set(translation.x, translation.y, translation.z), st.targetId, 18);
       if (n) st.setTarget(n.id, n.name, n.getHp(), n.getMaxHp());
       else st.setTarget(null);
     }
@@ -233,17 +262,33 @@ export function Player() {
     else if (moving) anim.current = "walk";
     else anim.current = "idle";
 
-    const look = camTarget.set(translation.x, translation.y + 1.28, translation.z);
-    const d = dist.current + (sprint ? 0.55 : 0);
+    // Smooth follow target — physics Y jitter was shaking the whole view
+    if (!lookReady.current) {
+      smoothY.current = translation.y;
+      lookSmooth.set(translation.x, translation.y + 1.35, translation.z);
+      lookReady.current = true;
+    }
+    smoothY.current = THREE.MathUtils.damp(smoothY.current, translation.y, grounded.current ? 8 : 14, dt);
+    lookSmooth.x = THREE.MathUtils.damp(lookSmooth.x, translation.x, 14, dt);
+    lookSmooth.y = THREE.MathUtils.damp(lookSmooth.y, smoothY.current + 1.35, 12, dt);
+    lookSmooth.z = THREE.MathUtils.damp(lookSmooth.z, translation.z, 14, dt);
+
+    const d = dist.current;
     const ox = Math.sin(yaw.current) * Math.cos(pitch.current) * d;
-    const oy = Math.sin(pitch.current) * d + 0.85;
+    const oy = Math.sin(pitch.current) * d + 0.55;
     const oz = Math.cos(yaw.current) * Math.cos(pitch.current) * d;
-    camPos.lerp(desiredCam.set(look.x + ox, look.y + oy, look.z + oz), 1 - Math.pow(0.0007, dt));
+    desiredCam.set(lookSmooth.x + ox, lookSmooth.y + oy, lookSmooth.z + oz);
+    // Tight follow — no laggy bob that reads as shake
+    camPos.lerp(desiredCam, 1 - Math.exp(-14 * dt));
     camera.position.copy(camPos);
-    camera.lookAt(look);
+    camera.lookAt(lookSmooth);
+
     const persp = camera as THREE.PerspectiveCamera;
-    persp.fov = THREE.MathUtils.damp(persp.fov, sprint ? 56 : 48, 6, dt);
-    persp.updateProjectionMatrix();
+    const wantFov = sprint ? 52 : 48;
+    if (Math.abs(persp.fov - wantFov) > 0.05) {
+      persp.fov = THREE.MathUtils.damp(persp.fov, wantFov, 4, dt);
+      persp.updateProjectionMatrix();
+    }
 
     playerPose.x = translation.x;
     playerPose.y = translation.y;
@@ -251,7 +296,7 @@ export function Player() {
     playerPose.yaw = yaw.current;
 
     from.set(translation.x, translation.y, translation.z);
-    const node = registry.nearestNode(from, 3.4);
+    const node = registry.nearestNode(from, 3.6);
     if (node) st.setPrompt({ kind: node.kind, id: node.id, label: node.label });
     else if (st.prompt) st.setPrompt(null);
 
@@ -276,7 +321,7 @@ export function Player() {
       if ((node.kind === "forage" || node.kind === "mine" || node.kind === "fish") && !st.gathering) {
         st.beginChannel(node.id, node.kind);
       }
-      if (node.kind === "jump") launchImpulse.current = new THREE.Vector3(wish.x * 2, 11.8, wish.z * 2 - 2.5);
+      if (node.kind === "jump") launchImpulse.current = new THREE.Vector3(wish.x * 2.2, 12.2, wish.z * 2.2 - 3);
     }
 
     if (st.gathering) {
@@ -301,11 +346,14 @@ export function Player() {
       position={spawn}
       colliders={false}
       lockRotations
-      friction={0.9}
+      friction={1.4}
       restitution={0}
+      linearDamping={0.35}
+      angularDamping={1}
       canSleep={false}
+      ccd
     >
-      <CapsuleCollider args={[0.42, 0.32]} position={[0, 0.74, 0]} />
+      <CapsuleCollider args={[0.45, 0.3]} position={[0, 0.75, 0]} />
       <group ref={group}>
         <Adventurer anim="idle" animRef={anim} attackRef={attackT} scale={1.12} />
       </group>

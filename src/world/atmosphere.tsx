@@ -30,7 +30,7 @@ export function Water() {
   });
   return (
     <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, WORLD.waterY, 0]}>
-      <planeGeometry args={[220, 220, 48, 48]} />
+      <planeGeometry args={[320, 320, 64, 64]} />
       <shaderMaterial
         ref={mat}
         uniforms={uniforms}
@@ -56,7 +56,7 @@ export function DuskSky() {
   );
   return (
     <mesh>
-      <sphereGeometry args={[180, 24, 16]} />
+      <sphereGeometry args={[260, 32, 20]} />
       <shaderMaterial
         uniforms={uniforms}
         vertexShader={skyVertex}
@@ -75,9 +75,9 @@ export function Clouds() {
   });
   const puffs = useMemo(
     () =>
-      Array.from({ length: 10 }, (_, i) => ({
-        pos: [Math.cos(i * 0.9) * 70, 28 + (i % 3) * 4, Math.sin(i * 0.9) * 70] as [number, number, number],
-        s: 8 + (i % 4) * 3,
+      Array.from({ length: 14 }, (_, i) => ({
+        pos: [Math.cos(i * 0.85) * 95, 32 + (i % 3) * 5, Math.sin(i * 0.85) * 95] as [number, number, number],
+        s: 10 + (i % 4) * 3.5,
       })),
     [],
   );
@@ -95,13 +95,13 @@ export function Clouds() {
 
 export function Fireflies() {
   const pts = useMemo(() => {
-    const a = new Float32Array(80 * 3);
-    for (let i = 0; i < 80; i++) {
+    const a = new Float32Array(120 * 3);
+    for (let i = 0; i < 120; i++) {
       const ang = Math.random() * Math.PI * 2;
-      const r = 6 + Math.random() * 28;
+      const r = 8 + Math.random() * 40;
       a[i * 3] = Math.cos(ang) * r;
-      a[i * 3 + 1] = 1.4 + Math.random() * 4;
-      a[i * 3 + 2] = Math.sin(ang) * r - 4;
+      a[i * 3 + 1] = 1.4 + Math.random() * 4.5;
+      a[i * 3 + 2] = Math.sin(ang) * r - 5;
     }
     return a;
   }, []);

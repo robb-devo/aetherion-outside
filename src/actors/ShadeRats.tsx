@@ -8,10 +8,11 @@ import { useGame } from "../game/store";
 import { sfx } from "../game/audio";
 
 const SPOTS: [number, number][] = [
-  [21.2, 4.8],
-  [24.0, 3.6],
-  [20.4, 6.2],
-  [25.1, 5.8],
+  [28.5, 6.2],
+  [32.0, 4.8],
+  [27.2, 8.0],
+  [33.8, 7.4],
+  [30.5, 9.5],
 ];
 
 function ShadeRat({ id, spawn }: { id: string; spawn: [number, number] }) {
@@ -71,7 +72,7 @@ function ShadeRat({ id, spawn }: { id: string; spawn: [number, number] }) {
     const dist = toP.length();
     const fromHome = pos.current.distanceTo(home);
 
-    if (playing && dist < 8.5 && dist > 1.2 && fromHome < 14) {
+    if (playing && dist < 9.5 && dist > 1.2 && fromHome < 18) {
       toP.y = 0;
       if (toP.lengthSq() > 0.001) toP.normalize();
       vel.current.lerp(toP.multiplyScalar(3.2), 1 - Math.pow(0.02, dt));
@@ -82,7 +83,7 @@ function ShadeRat({ id, spawn }: { id: string; spawn: [number, number] }) {
       }
       vel.current.x = Math.sin(wanderDir.current) * 1.05;
       vel.current.z = Math.cos(wanderDir.current) * 1.05;
-      if (fromHome > 6) {
+      if (fromHome > 8) {
         const back = home.clone().sub(pos.current).setY(0);
         if (back.lengthSq() > 0.001) back.normalize();
         vel.current.x = back.x * 2.2;
