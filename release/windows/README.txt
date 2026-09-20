@@ -1,6 +1,8 @@
 Aetherion Outside — Harbour of Dusk
-Stylized third-person slice (not Minecraft).
 
-Double-click "Aetherion Outside.bat" to play.
+Double-click:  Play Aetherion Outside.vbs
 
-See COPY-TO-DESKTOP.txt for the exact Desktop path.
+That opens a Chromium game window (Edge/Chrome app mode) for the
+best lighting and HUD. Fallback: Aetherion Outside.bat
+
+See COPY-TO-DESKTOP.txt for the Desktop path.

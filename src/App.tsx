@@ -1,7 +1,7 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { KeyboardControls, useProgress } from "@react-three/drei";
 import { Physics } from "@react-three/rapier";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import * as THREE from "three";
 import { HarbourWorld } from "./world/HarbourWorld";
 import { Player } from "./actors/Player";
@@ -37,6 +37,19 @@ function BootGate() {
 
 export default function App() {
   const phase = useGame((s) => s.phase);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("app") === "1") document.documentElement.classList.add("app-shell");
+    const onKey = (e: KeyboardEvent) => {
+      if (e.code !== "F11") return;
+      e.preventDefault();
+      if (!document.fullscreenElement) void document.documentElement.requestFullscreen();
+      else void document.exitFullscreen();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
 
   return (
     <KeyboardControls map={controls}>

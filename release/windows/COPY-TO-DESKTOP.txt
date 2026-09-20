@@ -1,52 +1,38 @@
-Aetherion Outside — Windows desktop copy
-========================================
+Aetherion Outside — copy this folder to the Desktop
+===================================================
 
-Copy THIS ENTIRE FOLDER to the PC desktop:
+WHY THIS FORMAT
+  The slice is a Chromium game window (Edge or Chrome --app mode), not a
+  Unity/Godot .exe. That is a quality choice: dusk lighting, bloom, water,
+  and the WoW HUD all run in a real GPU browser. Launch is still one click.
 
-  Source (in the repo / PR checkout):
+COPY
+  From the repo / PR:
     release/windows/
 
-  Destination Peter asked for:
+  To Peter's machine:
     C:\Users\Robbi\Desktop\Aetherion Outside\
 
-Exact items to copy (the whole directory, not a single file):
+  Copy the whole directory (not a single file).
 
+DOUBLE-CLICK THIS (preferred)
+  C:\Users\Robbi\Desktop\Aetherion Outside\Play Aetherion Outside.vbs
+
+  That starts a hidden local server and opens a tab-less Edge/Chrome
+  game window at http://127.0.0.1:8088/?app=1
+
+FALLBACK (shows a console)
   C:\Users\Robbi\Desktop\Aetherion Outside\Aetherion Outside.bat
-  C:\Users\Robbi\Desktop\Aetherion Outside\serve.ps1
-  C:\Users\Robbi\Desktop\Aetherion Outside\serve.mjs
-  C:\Users\Robbi\Desktop\Aetherion Outside\game\          (built web slice)
-  C:\Users\Robbi\Desktop\Aetherion Outside\COPY-TO-DESKTOP.txt
-  C:\Users\Robbi\Desktop\Aetherion Outside\README.txt
 
-How to play
------------
-1. Open the folder on the Desktop.
-2. Double-click  Aetherion Outside.bat
-3. A browser tab opens at http://127.0.0.1:8088/
-4. Click  Enter the Harbour
-5. Leave the black console window open while playing. Close it to quit.
+IN THE FOLDER
+  Play Aetherion Outside.vbs   <- one-click, no console
+  Aetherion Outside.bat        <- visible fallback
+  launch.ps1                   <- finds Edge/Chrome, waits for the server
+  serve.ps1 / serve.mjs        <- local HTTP (wasm/hdr need a real server)
+  game\                        <- the built slice
 
-The .bat prefers Node if installed; otherwise it uses Windows PowerShell
-(HttpListener). No Minecraft, no plugins, no extra install if PowerShell works
-(Windows 10/11 default).
+HOW TO QUIT
+  Close the game window. Optional: title screen "Exit" stops the server.
+  F11 toggles fullscreen inside the window.
 
-If the window says the port is busy, close other harbour windows.
-
-Controls (World of Warcraft-style)
-----------------------------------
-Hold right mouse     look
-Mouse wheel          zoom
-Both mouse buttons   walk forward
-WASD                 move
-Shift                sprint
-Space                jump
-1 or F               Strike
-Tab                  target nearest / cycle
-E                    talk, gather, mine, fish, jump pad
-5                    drink harbour tonic
-C                    character / skills
-B or I               bags
-L                    quest log
-M                    map
-H                    primer
-Esc                  close panels / clear target
+No Minecraft. No plugins. Windows 10/11 + Edge (preinstalled) is enough.

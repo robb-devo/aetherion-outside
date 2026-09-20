@@ -6,30 +6,29 @@ Standalone **stylized 3D action-RPG** slice inspired by Peter’s Aetherion MMO-
 
 Minecraft plugins in `aetherion-plugins` are **read-only inspiration**. This repository never modifies that tree. See [`docs/aetherion-design-notes.md`](docs/aetherion-design-notes.md).
 
-## Engine
+## Why a Chromium game window (not Unity / Godot / Electron .exe)
 
-Godot 4 and Unity are not installed on the build VM. v0.1 uses **Vite + React Three Fiber + Rapier + postprocessing** (browser + a Windows desktop launcher). Game state is a serializable Zustand snapshot so netcode can sit on top later.
+Godot and Unity are not on this VM. Electron’s Windows `.exe` is too large to keep in git (~150MB). The slice is therefore **WebGL in a desktop app window**:
 
-## Play on Windows (desktop)
+- **Quality:** same engine as the playable harbour (dusk lighting, bloom, water, WoW HUD)
+- **Launch:** one double-click opens Edge or Chrome in `--app` mode (no tabs, no URL bar)
+- **Quit:** close the window, or title-screen **Exit** (F11 fullscreen)
 
-Copy the **entire** folder:
+## Play on Windows (one click)
 
-| From (this repo) | To (Peter’s machine) |
-| --- | --- |
-| `release/windows/` | `C:\Users\Robbi\Desktop\Aetherion Outside\` |
+Copy the **entire** folder `release/windows/` to:
 
-Then double-click:
+`C:\Users\Robbi\Desktop\Aetherion Outside\`
 
-`C:\Users\Robbi\Desktop\Aetherion Outside\Aetherion Outside.bat`
+Double-click:
 
-A browser opens at `http://127.0.0.1:8088/`. Leave the console window open while you play. Details: [`release/windows/COPY-TO-DESKTOP.txt`](release/windows/COPY-TO-DESKTOP.txt).
+`C:\Users\Robbi\Desktop\Aetherion Outside\Play Aetherion Outside.vbs`
 
-Rebuild that folder after code changes:
+Fallback (shows a console): `Aetherion Outside.bat`
 
-```bash
-npm install
-npm run package:windows
-```
+Details: [`release/windows/COPY-TO-DESKTOP.txt`](release/windows/COPY-TO-DESKTOP.txt).
+
+Rebuild after code changes: `npm run package:windows`
 
 ## Play in a browser (dev)
 
@@ -59,6 +58,7 @@ Open `http://localhost:5173`. **Enter the Harbour**.
 | **L** | Quest log |
 | M | Map |
 | H | Primer |
+| F11 | Fullscreen |
 | Esc | Close / clear target |
 
 ## Systems in this slice

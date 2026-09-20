@@ -3,34 +3,18 @@ title Aetherion Outside — Harbour of Dusk
 cd /d "%~dp0"
 
 echo.
-echo   AETHERION OUTSIDE
-echo   Harbour of Dusk
+echo   AETHERION OUTSIDE — Harbour of Dusk
+echo   Starting a game window (Edge/Chrome app mode)...
 echo.
-echo   Leave this window open while you play.
-echo   Close it to stop the harbour server.
+echo   Close the game window when you are done.
+echo   If a harbour console stays in the tray, close it too.
 echo.
 
-set PORT=8088
-set URL=http://127.0.0.1:%PORT%/
-
-if exist "runtime\node.exe" (
-  start "" "%URL%"
-  "runtime\node.exe" serve.mjs
-  goto :eof
-)
-
-where node >nul 2>nul
-if %ERRORLEVEL%==0 (
-  start "" "%URL%"
-  node serve.mjs
-  goto :eof
-)
-
-start "" "%URL%"
-powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0serve.ps1"
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0launch.ps1"
 if %ERRORLEVEL% NEQ 0 (
-  echo.
-  echo Could not start the harbour.
-  echo Install Node.js LTS from https://nodejs.org then double-click this file again.
+  echo Launch helper failed. Starting the simple server instead...
+  set PORT=8088
+  start "" "http://127.0.0.1:8088/?app=1"
+  powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0serve.ps1"
   pause
 )

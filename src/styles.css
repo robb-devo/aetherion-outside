@@ -26,6 +26,17 @@ body,
   background: #0b0812;
   font-family: "Source Sans 3", "Segoe UI", sans-serif;
   color: var(--text);
+  user-select: none;
+}
+
+.app-shell,
+.app-shell body {
+  cursor: default;
+}
+
+.btn-quiet {
+  background: transparent !important;
+  border-color: rgba(230, 197, 106, 0.35) !important;
 }
 
 button,

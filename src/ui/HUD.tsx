@@ -455,6 +455,9 @@ function HelpBody() {
         <b>H</b> This primer
       </div>
       <div>
+        <b>F11</b> Fullscreen
+      </div>
+      <div>
         <b>Esc</b> Close / clear target
       </div>
     </div>

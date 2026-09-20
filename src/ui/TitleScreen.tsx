@@ -27,7 +27,16 @@ export function TitleScreen() {
             Continue
           </button>
         )}
-        <span className="title-hint">Right-mouse look · 1 Strike · Tab target · L quest log</span>
+        <span className="title-hint">Right-mouse look · 1 Strike · Tab target · L quest log · F11 fullscreen</span>
+        <button
+          className="btn-quiet"
+          onClick={() => {
+            void fetch("/__shutdown").catch(() => undefined);
+            window.close();
+          }}
+        >
+          Exit
+        </button>
       </div>
     </div>
   );

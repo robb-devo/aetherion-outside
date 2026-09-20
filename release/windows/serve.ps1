@@ -41,6 +41,12 @@ while ($listener.IsListening) {
   $res = $ctx.Response
   $path = [Uri]::UnescapeDataString($req.Url.LocalPath.TrimStart("/"))
   if ([string]::IsNullOrWhiteSpace($path)) { $path = "index.html" }
+  if ($path -eq "__shutdown") {
+    $res.StatusCode = 204
+    $res.Close()
+    $listener.Stop()
+    break
+  }
   $full = [IO.Path]::GetFullPath((Join-Path $root $path))
   $rootFull = [IO.Path]::GetFullPath($root)
   if (-not $full.StartsWith($rootFull)) {

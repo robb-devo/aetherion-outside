@@ -27,6 +27,12 @@ const server = http.createServer((req, res) => {
   let rel = decodeURIComponent(url.pathname);
   if (rel.endsWith("/")) rel += "index.html";
   if (rel === "/") rel = "/index.html";
+  if (rel === "/__shutdown" || rel === "__shutdown") {
+    res.writeHead(204);
+    res.end();
+    server.close();
+    return;
+  }
   const file = path.normalize(path.join(root, rel));
   if (!file.startsWith(path.normalize(root))) {
     res.writeHead(403);
