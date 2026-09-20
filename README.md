@@ -18,27 +18,23 @@ Picked for **visual quality + playability**, not for “must be an .exe”:
 
 Browser is the engine. The Windows launcher makes it *feel* like a desktop game.
 
-## Play on Windows (one click)
+## Play on Windows (one folder — always overwrite)
 
-1. Copy the **entire** folder `release/windows/` to:
+**Same path every update. Do not create a second Desktop folder.**
+
+1. Copy `release/windows/` **into** this existing folder and **replace** files when asked:
 
    `C:\Users\Robbi\Desktop\Aetherion Outside\`
 
-2. Double-click **either**:
+2. Double-click the **same** launcher every time:
 
    `C:\Users\Robbi\Desktop\Aetherion Outside\Play Aetherion Outside.vbs`
 
-   **or** (once) `Pin to Desktop.vbs`, then use the new Desktop icon:
+Optional: `Pin to Desktop.vbs` → always `C:\Users\Robbi\Desktop\Aetherion Outside.lnk`
 
-   `C:\Users\Robbi\Desktop\Aetherion Outside.lnk`
+Never “Aetherion Outside (2)” / “Copy” / “new”. Details: [`release/windows/COPY-TO-DESKTOP.txt`](release/windows/COPY-TO-DESKTOP.txt).
 
-The VBS starts a hidden local server and opens Edge or Chrome with `--app=http://127.0.0.1:8088/?app=1` (no tabs, no URL bar). First launch also drops that `.lnk` on the Desktop automatically.
-
-Fallback (shows a console): `Aetherion Outside.bat`
-
-Details: [`release/windows/COPY-TO-DESKTOP.txt`](release/windows/COPY-TO-DESKTOP.txt).
-
-Rebuild after code changes: `npm run package:windows`
+Rebuild in the repo (overwrites `release/windows/game/` in place): `npm run package:windows`
 
 ## Play in a browser (one click, local)
 

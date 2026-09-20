@@ -1,47 +1,43 @@
-Aetherion Outside — copy this folder to the Desktop
-===================================================
+Aetherion Outside — SAME Desktop folder every time
+=================================================
+
+ALWAYS use this exact path (overwrite, never make a new copy):
+
+  C:\Users\Robbi\Desktop\Aetherion Outside\
+
+DO NOT create:
+  Aetherion Outside (2)
+  Aetherion Outside - Copy
+  Aetherion Outside new
+  …or any second folder.
+
+HOW TO UPDATE
+  1. Download / copy the repo folder  release/windows/
+  2. Paste INTO the existing Desktop folder above
+  3. When Windows asks: Replace the files in the destination
+  4. Double-click the SAME launcher as always:
+
+     C:\Users\Robbi\Desktop\Aetherion Outside\Play Aetherion Outside.vbs
+
+  Optional shortcut (also always the same name):
+     C:\Users\Robbi\Desktop\Aetherion Outside.lnk
+     (created by Pin to Desktop.vbs or first launch)
 
 WHY THIS FORMAT
-  Quality over format: the harbour is WebGL (dusk lighting, bloom, water,
-  WoW HUD) inside a Chromium *app window* — not a Unity/Godot .exe, not a
-  browser tab. Same picture as Electron, without a 150MB git blob.
-  Launch is still one click.
+  WebGL harbour in a Chromium app window (Edge/Chrome --app).
+  One click. Same path. Updates replace game\ in place.
 
-COPY
-  From the repo / PR:
-    release/windows/
-
-  To Peter's machine:
-    C:\Users\Robbi\Desktop\Aetherion Outside\
-
-  Copy the whole directory (not a single file).
-
-DOUBLE-CLICK THIS (preferred)
-  C:\Users\Robbi\Desktop\Aetherion Outside\Play Aetherion Outside.vbs
-
-  That starts a hidden local server and opens a tab-less Edge/Chrome
-  game window at http://127.0.0.1:8088/?app=1
-
-  First launch also pins:
-    C:\Users\Robbi\Desktop\Aetherion Outside.lnk
-
-OPTIONAL (explicit pin)
-  Double-click Pin to Desktop.vbs if you want the shortcut without
-  launching the game.
-
-FALLBACK (shows a console)
-  C:\Users\Robbi\Desktop\Aetherion Outside\Aetherion Outside.bat
+FALLBACK
+  Aetherion Outside.bat  (shows a console)
 
 IN THE FOLDER
-  Play Aetherion Outside.vbs   <- one-click, no console
-  Pin to Desktop.vbs           <- Desktop .lnk only
-  Aetherion Outside.bat        <- visible fallback
-  launch.ps1                   <- finds Edge/Chrome, waits for the server
-  serve.ps1 / serve.mjs        <- local HTTP (wasm/hdr need a real server)
-  game\                        <- the built slice
+  Play Aetherion Outside.vbs   <- one-click
+  Pin to Desktop.vbs           <- Desktop .lnk
+  Aetherion Outside.bat
+  launch.ps1 / serve.ps1 / serve.mjs
+  game\                        <- rebuilt in place by npm run package:windows
 
-HOW TO QUIT
-  Close the game window. Optional: title screen "Exit" stops the server.
-  F11 toggles fullscreen inside the window.
+QUIT
+  Close the game window, or title Exit. F11 fullscreen.
 
-No Minecraft. No plugins. Windows 10/11 + Edge (preinstalled) is enough.
+No Minecraft. No plugins. Windows 10/11 + Edge is enough.

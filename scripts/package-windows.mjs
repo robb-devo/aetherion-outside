@@ -14,3 +14,5 @@ if (existsSync(dest)) rmSync(dest, { recursive: true, force: true });
 mkdirSync(path.dirname(dest), { recursive: true });
 cpSync(dist, dest, { recursive: true });
 console.log("Packaged Windows harbour →", dest);
+console.log("Overwrite on Peter's PC: C:\\Users\\Robbi\\Desktop\\Aetherion Outside\\  (same folder every time)");
+console.log("Launcher: Play Aetherion Outside.vbs");

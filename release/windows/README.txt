@@ -1,11 +1,15 @@
 Aetherion Outside — Harbour of Dusk
 
-Preferred:  Play Aetherion Outside.vbs
-            (hidden server + Edge/Chrome app window, no tabs)
+ALWAYS the same Desktop folder (overwrite updates, never a new copy):
 
-Also:       Pin to Desktop.vbs
-            → C:\Users\Robbi\Desktop\Aetherion Outside.lnk
+  C:\Users\Robbi\Desktop\Aetherion Outside\
 
-Fallback:   Aetherion Outside.bat  (shows a console)
+Double-click:
 
-See COPY-TO-DESKTOP.txt for the exact Desktop path.
+  Play Aetherion Outside.vbs
+
+Shortcut (same name every time):
+
+  C:\Users\Robbi\Desktop\Aetherion Outside.lnk
+
+See COPY-TO-DESKTOP.txt
