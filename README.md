@@ -6,23 +6,33 @@ Standalone **stylized 3D action-RPG** slice inspired by Peter’s Aetherion MMO-
 
 Minecraft plugins in `aetherion-plugins` are **read-only inspiration**. This repository never modifies that tree. See [`docs/aetherion-design-notes.md`](docs/aetherion-design-notes.md).
 
-## Why a Chromium game window (not Unity / Godot / Electron .exe)
+## Stack (quality over format)
 
-Godot and Unity are not on this VM. Electron’s Windows `.exe` is too large to keep in git (~150MB). The slice is therefore **WebGL in a desktop app window**:
+Picked for **visual quality + playability**, not for “must be an .exe”:
 
-- **Quality:** same engine as the playable harbour (dusk lighting, bloom, water, WoW HUD)
-- **Launch:** one double-click opens Edge or Chrome in `--app` mode (no tabs, no URL bar)
-- **Quit:** close the window, or title-screen **Exit** (F11 fullscreen)
+| Option | Why not for this slice |
+| --- | --- |
+| Godot 4 / Unity | Not installed on the build VM. Rebuilding the harbour from zero would throw away the playable dusk lighting, bloom, water, and WoW HUD. |
+| Electron Windows `.exe` | Same WebGL picture, ~150MB Chromium blob that does not belong in git. |
+| **This slice** | WebGL (Vite + React Three Fiber + Rapier + postFX) in a **tab-less Edge/Chrome app window**. Same GPU path as a native wrapper; launch is still one double-click. |
+
+Browser is the engine. The Windows launcher makes it *feel* like a desktop game.
 
 ## Play on Windows (one click)
 
-Copy the **entire** folder `release/windows/` to:
+1. Copy the **entire** folder `release/windows/` to:
 
-`C:\Users\Robbi\Desktop\Aetherion Outside\`
+   `C:\Users\Robbi\Desktop\Aetherion Outside\`
 
-Double-click:
+2. Double-click **either**:
 
-`C:\Users\Robbi\Desktop\Aetherion Outside\Play Aetherion Outside.vbs`
+   `C:\Users\Robbi\Desktop\Aetherion Outside\Play Aetherion Outside.vbs`
+
+   **or** (once) `Pin to Desktop.vbs`, then use the new Desktop icon:
+
+   `C:\Users\Robbi\Desktop\Aetherion Outside.lnk`
+
+The VBS starts a hidden local server and opens Edge or Chrome with `--app=http://127.0.0.1:8088/?app=1` (no tabs, no URL bar). First launch also drops that `.lnk` on the Desktop automatically.
 
 Fallback (shows a console): `Aetherion Outside.bat`
 
@@ -30,14 +40,16 @@ Details: [`release/windows/COPY-TO-DESKTOP.txt`](release/windows/COPY-TO-DESKTOP
 
 Rebuild after code changes: `npm run package:windows`
 
-## Play in a browser (dev)
+## Play in a browser (one click, local)
 
 ```bash
 npm install
-npm run dev
+npm run play
 ```
 
-Open `http://localhost:5173`. **Enter the Harbour**.
+That starts Vite and opens `http://localhost:5173`. Equivalent: `npm start` then visit that URL.
+
+**Enter the Harbour**.
 
 ## Controls (WoW-like)
 
@@ -82,3 +94,4 @@ Save is local (`Continue` on the title if you have been here).
 - Tab-target dungeon beat
 - Auction-style shard board
 - Optional multiplayer on the existing snapshot + `registry` handles
+- Optional Godot/Unity port *after* this loop is signed off (same systems, new renderer)

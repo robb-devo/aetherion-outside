@@ -1,8 +1,11 @@
 Aetherion Outside — Harbour of Dusk
 
-Double-click:  Play Aetherion Outside.vbs
+Preferred:  Play Aetherion Outside.vbs
+            (hidden server + Edge/Chrome app window, no tabs)
 
-That opens a Chromium game window (Edge/Chrome app mode) for the
-best lighting and HUD. Fallback: Aetherion Outside.bat
+Also:       Pin to Desktop.vbs
+            → C:\Users\Robbi\Desktop\Aetherion Outside.lnk
 
-See COPY-TO-DESKTOP.txt for the Desktop path.
+Fallback:   Aetherion Outside.bat  (shows a console)
+
+See COPY-TO-DESKTOP.txt for the exact Desktop path.

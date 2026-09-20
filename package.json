@@ -5,7 +5,9 @@
   "type": "module",
   "description": "Standalone stylized 3D action-RPG slice inspired by the Aetherion MMO-R network.",
   "scripts": {
+    "start": "vite --host 0.0.0.0 --port 5173",
     "dev": "vite --host 0.0.0.0 --port 5173",
+    "play": "bash scripts/play.sh",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 0.0.0.0 --port 5173",
     "screenshot": "node scripts/screenshot.mjs",

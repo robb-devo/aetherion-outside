@@ -49,6 +49,26 @@ function Find-Browser {
   return $null
 }
 
+function Install-DesktopShortcut {
+  $desktop = [Environment]::GetFolderPath("Desktop")
+  if (-not $desktop) { return }
+  $lnkPath = Join-Path $desktop "Aetherion Outside.lnk"
+  $target = Join-Path $root "Play Aetherion Outside.vbs"
+  try {
+    $w = New-Object -ComObject WScript.Shell
+    $s = $w.CreateShortcut($lnkPath)
+    $s.TargetPath = $target
+    $s.WorkingDirectory = $root
+    $s.WindowStyle = 1
+    $s.Description = "Aetherion Outside — Harbour of Dusk"
+    $s.Save()
+  } catch {
+    # Shortcut is convenience only; the VBS still launches the game.
+  }
+}
+
+Install-DesktopShortcut
+
 $browser = Find-Browser
 if ($browser) {
   Start-Process -FilePath $browser -ArgumentList @(

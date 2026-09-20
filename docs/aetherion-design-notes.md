@@ -26,12 +26,12 @@ Aetherion plays as a **hub-and-spoke MMO-R**: you land in a social capital, take
 | Skill | Network intent | Slice v0.1 |
 | --- | --- | --- |
 | Combat | Clear rift-touched pests / wildlife | Shade-rats in the warehouse yard; XP + fangs + shards |
-| Foraging | Gather dusk reagents | Moonpetals on the north hill; channelled gather |
-| Mining | Amethyst Mines loop | Landmark only (distant purple isle + crystal shrine) |
-| Farming | Farm Isle | Distant green isle silhouette |
-| Fishing | Fishing Isle | Distant teal isle + docked ships / piers as flair |
+| Foraging | Gather dusk reagents | Moonpetals on the plaza and north hill; channelled gather |
+| Mining | Amethyst Mines loop | Plaza / hill crystals drop chips; distant purple isle |
+| Farming | Farm Isle | Distant green isle; character sheet locked |
+| Fishing | Fishing Isle | Repeatable dusk line at the pier; distant teal isle |
 
-Combat + foraging are the two **playable** loops. The others exist as readable geography so the harbour feels like a capital, not a greybox.
+Combat + foraging are the two **quest** loops. Mining and fishing are playable harbour toys so the capital is not greybox. Farming waits on Farm Isle.
 
 ### Hub and islands
 
@@ -71,6 +71,17 @@ Quest **Dusk Lanterns**: talk → 3 moonpetals + 3 shade-rats → turn-in → sh
 4. One complete quest state machine: `idle → active → turnin → done`.
 5. Inventory + skills panels that look like a game, not debug overlays.
 6. Stylized dusk: fog, bloom, ACES, lanterns, amethyst accents.
+
+## Stack decision (quality over format dogma)
+
+Peter allowed a native desktop app **or** a browser if the harbour looks and feels like a game. This slice uses **WebGL in a Chromium app window**:
+
+- Godot and Unity are not on the VM that built this. Porting now would reset lighting, HUD, and the quest loop for no visual gain.
+- Electron would wrap the same canvas in a huge `.exe`. The Edge/Chrome `--app` window is that wrapper, using the GPU browser already on Windows.
+- `Play Aetherion Outside.vbs` is the one-click desktop launcher. `Pin to Desktop.vbs` / first launch writes `Aetherion Outside.lnk` on the Desktop.
+- `npm run play` is the one-click local/web start for macOS/Linux.
+
+A later Godot/Unity port is welcome once this loop is signed off — systems in `content.ts` / `store.ts` / `registry.ts` are renderer-agnostic.
 
 ## Architecture (this slice)
 

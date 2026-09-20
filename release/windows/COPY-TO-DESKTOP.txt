@@ -2,9 +2,10 @@ Aetherion Outside — copy this folder to the Desktop
 ===================================================
 
 WHY THIS FORMAT
-  The slice is a Chromium game window (Edge or Chrome --app mode), not a
-  Unity/Godot .exe. That is a quality choice: dusk lighting, bloom, water,
-  and the WoW HUD all run in a real GPU browser. Launch is still one click.
+  Quality over format: the harbour is WebGL (dusk lighting, bloom, water,
+  WoW HUD) inside a Chromium *app window* — not a Unity/Godot .exe, not a
+  browser tab. Same picture as Electron, without a 150MB git blob.
+  Launch is still one click.
 
 COPY
   From the repo / PR:
@@ -21,11 +22,19 @@ DOUBLE-CLICK THIS (preferred)
   That starts a hidden local server and opens a tab-less Edge/Chrome
   game window at http://127.0.0.1:8088/?app=1
 
+  First launch also pins:
+    C:\Users\Robbi\Desktop\Aetherion Outside.lnk
+
+OPTIONAL (explicit pin)
+  Double-click Pin to Desktop.vbs if you want the shortcut without
+  launching the game.
+
 FALLBACK (shows a console)
   C:\Users\Robbi\Desktop\Aetherion Outside\Aetherion Outside.bat
 
 IN THE FOLDER
   Play Aetherion Outside.vbs   <- one-click, no console
+  Pin to Desktop.vbs           <- Desktop .lnk only
   Aetherion Outside.bat        <- visible fallback
   launch.ps1                   <- finds Edge/Chrome, waits for the server
   serve.ps1 / serve.mjs        <- local HTTP (wasm/hdr need a real server)
