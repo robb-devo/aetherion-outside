@@ -2,14 +2,19 @@ import * as THREE from "three";
 
 export type EnemyHandle = {
   id: string;
+  name: string;
   getPos: () => THREE.Vector3;
+  getHp: () => number;
+  getMaxHp: () => number;
   hurt: (dmg: number, from: THREE.Vector3) => boolean;
   alive: () => boolean;
 };
 
+export type NodeKind = "npc" | "forage" | "jump" | "mine" | "fish";
+
 export type NodeHandle = {
   id: string;
-  kind: "npc" | "forage" | "jump";
+  kind: NodeKind;
   label: string;
   getPos: () => THREE.Vector3;
   available: () => boolean;
@@ -34,6 +39,9 @@ export const registry = {
       nodes.delete(h.id);
     };
   },
+  getEnemy(id: string) {
+    return enemies.get(id) ?? null;
+  },
   enemies() {
     return [...enemies.values()];
   },
@@ -49,6 +57,14 @@ export const registry = {
       }
     }
     return best;
+  },
+  cycleEnemy(from: THREE.Vector3, currentId: string | null, maxDist: number) {
+    const list = [...enemies.values()]
+      .filter((e) => e.alive() && e.getPos().distanceTo(from) <= maxDist)
+      .sort((a, b) => a.getPos().distanceTo(from) - b.getPos().distanceTo(from));
+    if (!list.length) return null;
+    const idx = list.findIndex((e) => e.id === currentId);
+    return list[(idx + 1) % list.length];
   },
   nearestNode(from: THREE.Vector3, maxDist: number) {
     let best: NodeHandle | null = null;

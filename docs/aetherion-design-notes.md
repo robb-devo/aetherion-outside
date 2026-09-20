@@ -72,9 +72,19 @@ Quest **Dusk Lanterns**: talk → 3 moonpetals + 3 shade-rats → turn-in → sh
 5. Inventory + skills panels that look like a game, not debug overlays.
 6. Stylized dusk: fog, bloom, ACES, lanterns, amethyst accents.
 
-## Architecture (online later)
+## Architecture (this slice)
 
-v0.1 is local Zustand. State is already serializable (`skills`, `inventory`, `questStage`, `shards`, `hp`). `registry.ts` is the entity socket: later a netcode layer can own the same handles (enemy HP, gather nodes, NPC gossip). No Minecraft protocol.
+Clean modules, serializable snapshot — not plugin Java:
+
+| Module | Role |
+| --- | --- |
+| `src/game/content.ts` | Skills (combat/forage/mine/fish/farm), NPCs, quest, vendor prices, zones |
+| `src/game/systems.ts` | Quest state machine, save key |
+| `src/game/store.ts` | HP, shards, inventory, target, chat, cooldowns, persist |
+| `src/game/registry.ts` | Live entity handles (enemies, gather nodes) — netcode socket later |
+| `src/actors/Player.tsx` | WoW camera (RMB look, wheel zoom, Tab target, ability 1) |
+
+Island silhouettes stand in for Farm / Fishing / Eldervale / Amethyst Mines until those zones are walkable.
 
 ## What we refused
 

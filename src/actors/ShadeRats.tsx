@@ -31,7 +31,10 @@ function ShadeRat({ id, spawn }: { id: string; spawn: [number, number] }) {
   useEffect(() => {
     return registry.registerEnemy({
       id,
+      name: "Shade-rat",
       getPos: () => pos.current.clone(),
+      getHp: () => hp.current,
+      getMaxHp: () => 42,
       alive: () => alive.current,
       hurt: (dmg, from) => {
         if (!alive.current) return false;

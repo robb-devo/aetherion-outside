@@ -485,13 +485,175 @@ canvas {
   text-shadow: 0 2px 8px #000;
 }
 
-.compass {
+.hud-quest h3 small {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-left: 8px;
+}
+
+.unitframe {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+  margin-bottom: 8px;
+  padding: 8px;
+}
+
+.player-frame,
+.target-frame {
+  background: var(--panel);
+  border: 1px solid rgba(230, 197, 106, 0.45);
+}
+
+.target-frame {
+  border-color: rgba(212, 93, 106, 0.55);
+}
+
+.uf-name {
+  font-family: "Cinzel", serif;
+  font-size: 13px;
+  color: var(--gold);
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.uf-name span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.hp-bar,
+.xp-bar {
+  position: relative;
+}
+
+.hp-bar em {
   position: absolute;
-  top: 8px;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 10px;
+  font-style: normal;
+  letter-spacing: 0.08em;
+}
+
+.xp-bar {
+  height: 6px;
+}
+
+.portrait.rat {
+  font-size: 22px;
+}
+
+.zone-splash {
+  position: absolute;
+  top: 18%;
   left: 50%;
   transform: translateX(-50%);
-  font-family: "Cinzel", serif;
-  letter-spacing: 0.4em;
+  text-align: center;
+  pointer-events: none;
+  animation: zonefade 3.1s ease forwards;
+}
+
+.zone-continent {
   font-size: 12px;
-  color: rgba(243, 234, 216, 0.7);
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--amethyst);
+}
+
+.zone-name {
+  font-family: "Cinzel", serif;
+  font-size: 42px;
+  color: #fff6df;
+  text-shadow: 0 6px 24px #000;
+}
+
+@keyframes zonefade {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(8px);
+  }
+  12% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.castbar {
+  position: absolute;
+  left: 50%;
+  bottom: 168px;
+  transform: translateX(-50%);
+  width: 260px;
+  padding: 8px 10px;
+  text-align: center;
+  font-size: 13px;
+}
+
+.chat {
+  position: absolute;
+  left: 18px;
+  bottom: 110px;
+  width: min(360px, 36vw);
+  padding: 8px 10px;
+  max-height: 140px;
+  overflow: hidden;
+  font-size: 12px;
+  pointer-events: none;
+}
+
+.chat-line {
+  margin: 2px 0;
+  color: var(--muted);
+}
+
+.chat-line.loot {
+  color: var(--gold);
+}
+
+.chat-line.say {
+  color: #9fd0ff;
+}
+
+.actionbar {
+  display: flex;
+  gap: 4px;
+  padding: 8px 10px;
+  pointer-events: auto;
+  background: var(--panel);
+  border: 1px solid rgba(230, 197, 106, 0.45);
+}
+
+.slot .slot-icon {
+  font-size: 18px;
+}
+
+.slot .cd {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(8, 6, 14, 0.72);
+  pointer-events: none;
+}
+
+.slot.empty {
+  opacity: 0.45;
+}
+
+.skill-locked {
+  opacity: 0.55;
+}
+
+.hud-dialog {
+  bottom: 128px;
 }

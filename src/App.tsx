@@ -17,7 +17,7 @@ const controls = [
   { name: "jump", keys: ["Space"] },
   { name: "sprint", keys: ["ShiftLeft", "ShiftRight"] },
   { name: "interact", keys: ["KeyE"] },
-  { name: "attack", keys: ["KeyF"] },
+  { name: "attack", keys: ["KeyF", "Digit1"] },
 ];
 
 function TitleCam() {

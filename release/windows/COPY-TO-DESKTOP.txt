@@ -1,0 +1,52 @@
+Aetherion Outside — Windows desktop copy
+========================================
+
+Copy THIS ENTIRE FOLDER to the PC desktop:
+
+  Source (in the repo / PR checkout):
+    release/windows/
+
+  Destination Peter asked for:
+    C:\Users\Robbi\Desktop\Aetherion Outside\
+
+Exact items to copy (the whole directory, not a single file):
+
+  C:\Users\Robbi\Desktop\Aetherion Outside\Aetherion Outside.bat
+  C:\Users\Robbi\Desktop\Aetherion Outside\serve.ps1
+  C:\Users\Robbi\Desktop\Aetherion Outside\serve.mjs
+  C:\Users\Robbi\Desktop\Aetherion Outside\game\          (built web slice)
+  C:\Users\Robbi\Desktop\Aetherion Outside\COPY-TO-DESKTOP.txt
+  C:\Users\Robbi\Desktop\Aetherion Outside\README.txt
+
+How to play
+-----------
+1. Open the folder on the Desktop.
+2. Double-click  Aetherion Outside.bat
+3. A browser tab opens at http://127.0.0.1:8088/
+4. Click  Enter the Harbour
+5. Leave the black console window open while playing. Close it to quit.
+
+The .bat prefers Node if installed; otherwise it uses Windows PowerShell
+(HttpListener). No Minecraft, no plugins, no extra install if PowerShell works
+(Windows 10/11 default).
+
+If the window says the port is busy, close other harbour windows.
+
+Controls (World of Warcraft-style)
+----------------------------------
+Hold right mouse     look
+Mouse wheel          zoom
+Both mouse buttons   walk forward
+WASD                 move
+Shift                sprint
+Space                jump
+1 or F               Strike
+Tab                  target nearest / cycle
+E                    talk, gather, mine, fish, jump pad
+5                    drink harbour tonic
+C                    character / skills
+B or I               bags
+L                    quest log
+M                    map
+H                    primer
+Esc                  close panels / clear target

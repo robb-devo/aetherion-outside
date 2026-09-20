@@ -57,6 +57,12 @@ const accepted = await clickLabel("accept");
 await new Promise((r) => setTimeout(r, 800));
 await page.screenshot({ path: path.join(outDir, "quest_accepted.png"), type: "png" });
 
+await page.keyboard.press("KeyL");
+await new Promise((r) => setTimeout(r, 400));
+await page.screenshot({ path: path.join(outDir, "quest_log.png"), type: "png" });
+await page.keyboard.press("Escape");
+await new Promise((r) => setTimeout(r, 200));
+
 await page.keyboard.press("KeyC");
 await new Promise((r) => setTimeout(r, 400));
 await page.screenshot({ path: path.join(outDir, "skills_panel.png"), type: "png" });

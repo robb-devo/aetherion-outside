@@ -2,6 +2,7 @@ import { unlockAudio } from "../game/audio";
 import { useGame } from "../game/store";
 
 export function TitleScreen() {
+  const hasSave = useGame((s) => s.hasSave);
   return (
     <div className="title-screen">
       <p className="title-kicker">Aetherion Outside · Vertical Slice 0.1</p>
@@ -11,12 +12,22 @@ export function TitleScreen() {
         <button
           onClick={() => {
             void unlockAudio();
-            useGame.getState().enterWorld();
+            useGame.getState().enterWorld("new");
           }}
         >
           Enter the Harbour
         </button>
-        <span className="title-hint">Third-person · single-player slice · shards, skills, one dusk quest</span>
+        {hasSave && (
+          <button
+            onClick={() => {
+              void unlockAudio();
+              useGame.getState().enterWorld("continue");
+            }}
+          >
+            Continue
+          </button>
+        )}
+        <span className="title-hint">Right-mouse look · 1 Strike · Tab target · L quest log</span>
       </div>
     </div>
   );

@@ -8,7 +8,8 @@
     "dev": "vite --host 0.0.0.0 --port 5173",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 0.0.0.0 --port 5173",
-    "screenshot": "node scripts/screenshot.mjs"
+    "screenshot": "node scripts/screenshot.mjs",
+    "package:windows": "node scripts/package-windows.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^9.122.0",

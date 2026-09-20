@@ -15,6 +15,7 @@ function NPC({ id }: { id: NpcId }) {
     return [x, surfaceY(x, z), z] as [number, number, number];
   }, [def]);
   const questStage = useGame((s) => s.questStage);
+  const hidePlates = useGame((s) => !!s.panel || !!s.dialogNpc);
 
   useEffect(() => {
     const world = new THREE.Vector3();
@@ -45,6 +46,7 @@ function NPC({ id }: { id: NpcId }) {
   return (
     <group ref={group} position={pos} rotation={[0, def.facing, 0]}>
       <Adventurer anim="idle" npc palette={def.palette} scale={1.02} />
+      {!hidePlates && (
       <Html position={[0, 2.35, 0]} center distanceFactor={10} style={{ pointerEvents: "none" }}>
         <div
           style={{
@@ -60,6 +62,7 @@ function NPC({ id }: { id: NpcId }) {
           {def.name}
         </div>
       </Html>
+      )}
     </group>
   );
 }

@@ -2,68 +2,83 @@
 
 Standalone **stylized 3D action-RPG** slice inspired by Peter’s Aetherion MMO-R network.
 
-This is **not** a Minecraft clone, **not** a plugin client, and **not** a capsule/tic-tac tech demo. It is a third-person harbour fantasy: authored landmarks, a dusk quest, combat + foraging, and a WoW-like HUD.
+**Not** Minecraft. **Not** a plugin client. **Not** a capsule tech demo. Third-person harbour fantasy with a World of Warcraft-style camera, action bar, quest log, and zone atmosphere.
 
 Minecraft plugins in `aetherion-plugins` are **read-only inspiration**. This repository never modifies that tree. See [`docs/aetherion-design-notes.md`](docs/aetherion-design-notes.md).
 
-## Engine choice
+## Engine
 
-| Option | On this VM? | Decision |
-| --- | --- | --- |
-| Godot 4 | Not installed | — |
-| Unity | Not installed | — |
-| **Three.js + React Three Fiber + Rapier** | Node 22 + Chrome available | **Used for v0.1** |
+Godot 4 and Unity are not installed on the build VM. v0.1 uses **Vite + React Three Fiber + Rapier + postprocessing** (browser + a Windows desktop launcher). Game state is a serializable Zustand snapshot so netcode can sit on top later.
 
-R3F lets the slice run in the browser, keep a serializable game store (ready for netcode), and still hit lighting, fog, bloom, water, and a third-person camera. If Godot lands in the environment later, the *design* (hub, skills, quest) ports; the *code* here is the playable reference.
+## Play on Windows (desktop)
 
-## Run
+Copy the **entire** folder:
+
+| From (this repo) | To (Peter’s machine) |
+| --- | --- |
+| `release/windows/` | `C:\Users\Robbi\Desktop\Aetherion Outside\` |
+
+Then double-click:
+
+`C:\Users\Robbi\Desktop\Aetherion Outside\Aetherion Outside.bat`
+
+A browser opens at `http://127.0.0.1:8088/`. Leave the console window open while you play. Details: [`release/windows/COPY-TO-DESKTOP.txt`](release/windows/COPY-TO-DESKTOP.txt).
+
+Rebuild that folder after code changes:
+
+```bash
+npm install
+npm run package:windows
+```
+
+## Play in a browser (dev)
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open `http://localhost:5173`. Click **Enter the Harbour**.
+Open `http://localhost:5173`. **Enter the Harbour**.
 
-```bash
-npm run build
-npm run preview
-```
-
-## Controls
+## Controls (WoW-like)
 
 | Input | Action |
 | --- | --- |
-| Click canvas | Mouse look (pointer lock) |
+| Hold **right mouse** | Look |
+| **Wheel** | Zoom |
+| **Both mouse buttons** | Walk forward |
 | WASD | Move |
 | Shift | Sprint |
 | Space | Jump |
-| Mouse / F | Sword |
-| E | Talk, gather, jump pad |
-| C | Skills |
-| I | Inventory |
-| H / Esc | Primer / close |
+| **1** or F | Strike |
+| **Tab** | Target / cycle |
+| E | Talk, gather, mine, fish, jump pad |
+| 5 | Drink harbour tonic |
+| C | Character / skills (all five professions) |
+| B or I | Bags |
+| **L** | Quest log |
+| M | Map |
+| H | Primer |
+| Esc | Close / clear target |
 
-## What’s in the slice (v0.1)
+## Systems in this slice
 
-- **Harbour of Dusk** — lighthouse, guild hall, tavern, market, warehouse yard, moonpetal hill, Eldervale gate, docked ships, distant isles (Eldervale, Farm, Fishing, Amethyst Mines).
-- **Third-person adventurer** with cloak, hood, sword, walk/run/jump/attack.
-- **Combat** — shade-rats, HP bars, shards + combat XP.
-- **Foraging** — moonpetals, channelled gather, foraging XP.
-- **Quest: Dusk Lanterns** — Harbourmaster Corin → petals + rats → shards + *Dusk Lantern* cosmetic.
-- **HUD** — HP, skill XP, shards, minimap, quest tracker, dialog, inventory/skills panels.
-- **Flair** — jump pad, lantern bloom, water shader, dusk sky, fireflies.
+| System | In the harbour |
+| --- | --- |
+| Hub | Authored Harbour of Dusk + distant isles (Eldervale, Farm, Fishing, Amethyst Mines) |
+| Combat | Shade-rats, Tab target, Strike (1), target frame |
+| Foraging | Moonpetals |
+| Mining | Amethyst chips at plaza / hill crystals |
+| Fishing | Repeatable dusk line at the pier |
+| Farming | On the character sheet, locked to Farm Isle |
+| Quest | **Dusk Lanterns** — Corin → 3 petals + 3 rats → shards + Dusk Lantern |
+| Economy | Shards, Lila buys petals / sells tonic |
+
+Save is local (`Continue` on the title if you have been here).
 
 ## What’s next
 
-- Mining / fishing / farming as real islands behind the Eldervale gate.
-- Tab-target + more enemy types; a short dungeon beat.
-- Shard vendor stock (Lila).
-- Optional multiplayer: replicate the Zustand snapshot + `registry` handles.
-- Godot 4 port if the editor is available in CI / the VM.
-
-## Credits
-
-- Dusk HDRI: [Poly Haven — The Sky Is On Fire](https://polyhaven.com/a/the_sky_is_on_fire) (CC0), stored at `public/env/dusk.hdr`.
-- Fonts: Cinzel + Source Sans 3 (Google Fonts).
-- Aetherion fiction: original to this slice; plugin systems mapped at a design level only.
+- Farm Isle / Eldervale as walkable zones behind the gate
+- Tab-target dungeon beat
+- Auction-style shard board
+- Optional multiplayer on the existing snapshot + `registry` handles

@@ -7,6 +7,7 @@ import { NPCs } from "../actors/NPCs";
 import { ShadeRats } from "../actors/ShadeRats";
 import { Moonpetals } from "../actors/Moonpetals";
 import { JumpPad } from "../actors/JumpPad";
+import { SkillNodes } from "../actors/SkillNodes";
 import { COLORS } from "../game/palette";
 
 export function HarbourWorld() {
@@ -52,6 +53,7 @@ export function HarbourWorld() {
       <NPCs />
       <ShadeRats />
       <Moonpetals />
+      <SkillNodes />
       <JumpPad />
       <EffectComposer enableNormalPass={false} multisampling={0}>
         <SMAA />
