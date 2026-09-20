@@ -185,7 +185,7 @@ export const useGame = create<GameState>((set, get) => ({
       zonePing: { name: "Harbour of Dusk", at: Date.now() },
     });
     get().toast("Harbourmaster Corin wants a word.", "info");
-    get().say("system", "Entered Harbour of Dusk. Right-mouse look · Left-click Strike · Tab target · L quest log.");
+    get().say("system", "Entered Harbour of Dusk. LMB combo Strike · 2 Bow (RMB aim) · Tab target · L quest log.");
   },
 
   setLocked: (locked) => set({ locked }),
@@ -383,8 +383,8 @@ export const useGame = create<GameState>((set, get) => ({
   },
 
   startSwing: () => {
-    if (get().swingCd > 0) return false;
-    set({ swingCd: 0.7 });
+    // Combo chains manage their own timing; keep a short UI CD pulse
+    set({ swingCd: 0.35 });
     return true;
   },
 }));

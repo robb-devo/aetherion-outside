@@ -2,20 +2,21 @@
 
 Standalone 3D slice in this repo only. Minecraft plugins are **inspiration**, never a source of copied Java.
 
-## Scan of `aetherion-plugins`
+## Scan of `aetherion-plugins` / Minecraft server world
 
-This agent attempted a **read-only** scan of `https://github.com/robb-devo/aetherion-plugins`:
+This agent attempted a **read-only** scan of Peter’s Minecraft MMO-R sources:
 
 | Attempt | Result |
 | --- | --- |
-| `gh repo view` / GitHub REST tree / contents / README | **404 Not Found** (token cannot see the repo — private or not on this org) |
-| `git clone --depth 1` (no push, temp path) | `Repository not found` |
-| Adjacent names (`aetherion`, `aetherion-mc`) under `robb-devo` | 404 |
-| GitHub code search for the org | No accessible plugin tree |
+| `aetherion-plugins` via `gh` / REST / shallow clone | **404 / not found** (token cannot see the repo) |
+| Adjacent repos (`aetherion`, `aetherion-mc`, `aetherion-server`, `aetherion-world`, …) | 404 |
+| Local `.mca` / world folders on the VM | none |
 
-**No files were written to, committed, or pushed on that repository.** Design below is mapped from the product brief (skills, hub/islands, quests, shards, jump pads, cosmetics) plus typical MMO-R hub pacing — not from decompiled or copied plugin code.
+**No Minecraft world files were available to scan.** The harbour layout is therefore a **stylized rebuild of the hub fantasy** from the product brief (capital docks, guild, warehouse yard, moonpetal hill, Eldervale gate, lighthouse spit) — not a 1:1 voxel import.
 
-If the plugins repo is granted read access later, this document should be revised with concrete NPC names, island layouts, and skill formulas from that scan.
+If world access is granted later (repo, zip, or read-only SFTP), revise landmarks to match real coords / districts.
+
+**No files were written to, committed, or pushed on `aetherion-plugins`.**
 
 ## Network fantasy (target, not cloned)
 

@@ -399,6 +399,90 @@ canvas {
   letter-spacing: 0.04em;
 }
 
+.slot-active {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px rgba(230, 197, 106, 0.55), inset 0 0 18px rgba(230, 197, 106, 0.12);
+}
+
+.weapon-pill {
+  margin-top: 8px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
+}
+
+.hit-flash {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 40;
+  mix-blend-mode: screen;
+}
+
+.bow-reticle {
+  position: fixed;
+  left: 50%;
+  top: 48%;
+  width: 28px;
+  height: 28px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 35;
+}
+
+.bow-reticle > i {
+  position: absolute;
+  background: rgba(243, 234, 216, 0.9);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+}
+
+.bow-reticle > i:nth-child(1),
+.bow-reticle > i:nth-child(2) {
+  width: 2px;
+  height: 8px;
+  left: 13px;
+}
+
+.bow-reticle > i:nth-child(1) {
+  top: 0;
+}
+
+.bow-reticle > i:nth-child(2) {
+  bottom: 0;
+}
+
+.bow-reticle > i:nth-child(3),
+.bow-reticle > i:nth-child(4) {
+  height: 2px;
+  width: 8px;
+  top: 13px;
+}
+
+.bow-reticle > i:nth-child(3) {
+  left: 0;
+}
+
+.bow-reticle > i:nth-child(4) {
+  right: 0;
+}
+
+.draw-ring {
+  position: absolute;
+  inset: -18px;
+  display: grid;
+  place-items: center;
+}
+
+.draw-ring span {
+  width: 42px;
+  height: 42px;
+  border: 2px solid rgba(230, 197, 106, 0.85);
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(180, 140, 255, 0.35);
+}
+
 .hud-dialog {
   position: absolute;
   left: 50%;

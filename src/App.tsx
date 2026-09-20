@@ -69,7 +69,7 @@ export default function App() {
       >
         <Suspense fallback={null}>
           {phase !== "playing" && <TitleCam />}
-          <Physics gravity={[0, -22, 0]} interpolate>
+          <Physics gravity={[0, -22, 0]} interpolate={false} timeStep="vary">
             <HarbourWorld />
             {phase === "playing" && <Player />}
           </Physics>

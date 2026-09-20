@@ -165,18 +165,22 @@ export function Tree({ position, scale = 1 }: { position: V3; scale?: number }) 
   const s = scale;
   return (
     <group position={position} scale={s}>
-      <Cyl args={[0.18, 0.28, 1.6, 7]} color={COLORS.woodDark} position={[0, 0.8, 0]} />
-      <mesh position={[0, 2.1, 0]} castShadow>
-        <icosahedronGeometry args={[1.15, 0]} />
-        <meshStandardMaterial color="#2f5a34" roughness={0.9} />
+      <Cyl args={[0.2, 0.32, 1.85, 8]} color={COLORS.woodDark} position={[0, 0.9, 0]} />
+      <mesh position={[0, 2.35, 0]} castShadow>
+        <icosahedronGeometry args={[1.25, 0]} />
+        <meshStandardMaterial color="#2f5a34" roughness={0.88} />
       </mesh>
-      <mesh position={[0.45, 2.45, -0.2]} castShadow>
+      <mesh position={[0.55, 2.7, -0.25]} castShadow>
+        <icosahedronGeometry args={[0.78, 0]} />
+        <meshStandardMaterial color="#3f6f3c" roughness={0.88} />
+      </mesh>
+      <mesh position={[-0.5, 2.8, 0.3]} castShadow>
         <icosahedronGeometry args={[0.7, 0]} />
-        <meshStandardMaterial color="#3f6f3c" roughness={0.9} />
+        <meshStandardMaterial color="#274c2d" roughness={0.88} />
       </mesh>
-      <mesh position={[-0.4, 2.55, 0.25]} castShadow>
-        <icosahedronGeometry args={[0.62, 0]} />
-        <meshStandardMaterial color="#274c2d" roughness={0.9} />
+      <mesh position={[0.1, 3.15, 0.15]} castShadow>
+        <icosahedronGeometry args={[0.55, 0]} />
+        <meshStandardMaterial color="#4a7a42" roughness={0.86} />
       </mesh>
     </group>
   );
@@ -253,6 +257,8 @@ export function Building({
       <Box size={[0.9, 1.7, 0.12]} color={COLORS.woodDark} position={[0, 0.85, d / 2 + 0.04]} />
       <WindowGlow position={[-w * 0.28, h * 0.55, d / 2 + 0.05]} />
       <WindowGlow position={[w * 0.28, h * 0.55, d / 2 + 0.05]} />
+      <Cyl args={[0.22, 0.28, 1.1, 8]} color={COLORS.stoneDark} position={[w * 0.32, h + 1.15, -d * 0.15]} />
+      <Box size={[0.55, 0.2, 0.55]} color="#3a322c" position={[w * 0.32, h + 1.7, -d * 0.15]} />
       {children}
     </group>
   );

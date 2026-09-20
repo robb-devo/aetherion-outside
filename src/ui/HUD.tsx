@@ -1,7 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ABILITIES, ITEMS, LANDMARKS, QUEST, SKILLS, VENDOR, xpToNext } from "../game/content";
 import { useGame } from "../game/store";
 import { NPCS } from "../game/content";
+import { feel } from "../game/feel";
 
 export function HUD() {
   const hp = useGame((s) => s.hp);
@@ -25,11 +26,50 @@ export function HUD() {
   const swingCd = useGame((s) => s.swingCd);
   const tonicCd = useGame((s) => s.tonicCd);
   const combatLv = skills.combat.level;
+  const [juice, setJuice] = useState({ flash: 0, draw: 0, aiming: false, weapon: "sword" });
+
+  useEffect(() => {
+    let id = 0;
+    const tick = () => {
+      setJuice({
+        flash: feel.flash,
+        draw: feel.draw,
+        aiming: feel.aiming,
+        weapon: feel.weapon,
+      });
+      id = requestAnimationFrame(tick);
+    };
+    id = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(id);
+  }, []);
 
   const zoneFresh = zonePing && Date.now() - zonePing.at < 3200;
 
   return (
     <div className="hud">
+      {juice.flash > 0.02 && (
+        <div
+          className="hit-flash"
+          style={{
+            opacity: juice.flash * 0.85,
+            background: `radial-gradient(circle at 50% 45%, rgba(255,220,180,${0.35 * juice.flash}) 0%, rgba(80,0,0,${0.45 * juice.flash}) 55%, transparent 75%)`,
+          }}
+        />
+      )}
+      {juice.aiming && (
+        <div className="bow-reticle">
+          <i />
+          <i />
+          <i />
+          <i />
+          {juice.draw > 0.05 && (
+            <div className="draw-ring">
+              <span style={{ transform: `scale(${0.55 + juice.draw * 0.45})` }} />
+            </div>
+          )}
+        </div>
+      )}
+
       {zoneFresh && zonePing && (
         <div className="zone-splash">
           <div className="zone-continent">Aetherion</div>
@@ -73,6 +113,7 @@ export function HUD() {
           </div>
         )}
         <div className="shards">◆ {shards} shards</div>
+        <div className="weapon-pill">{juice.weapon === "bow" ? "🏹 Bow" : "⚔ Sword"} · combo LMB</div>
       </div>
 
       <Minimap label={subzone} />
@@ -99,7 +140,7 @@ export function HUD() {
         </div>
       )}
 
-      {prompt && (
+      {prompt && !juice.aiming && (
         <div className="hud-prompt panel">
           <kbd>E</kbd>
           {prompt.label}
@@ -139,9 +180,11 @@ export function HUD() {
       <div className="hud-bottom">
         <div className="actionbar">
           {ABILITIES.map((ab) => {
-            const cd = ab.id === "strike" ? swingCd / 0.7 : ab.id === "tonic" ? tonicCd / 8 : 0;
+            const cd = ab.id === "strike" ? swingCd / 0.35 : ab.id === "tonic" ? tonicCd / 8 : 0;
+            const active =
+              (ab.id === "strike" && juice.weapon === "sword") || (ab.id === "bow" && juice.weapon === "bow");
             return (
-              <div key={ab.id} className="slot" title={ab.name}>
+              <div key={ab.id} className={`slot ${active ? "slot-active" : ""}`} title={ab.name}>
                 <span className="slot-icon">{ab.icon}</span>
                 {cd > 0 && <i className="cd" style={{ height: `${cd * 100}%` }} />}
                 <small>{ab.key}</small>
@@ -155,9 +198,13 @@ export function HUD() {
           ))}
         </div>
         <div className="hotkeys">
-          {locked
-            ? "Right-mouse look · wheel zoom · both buttons walk · left-click Strike"
-            : "Hold right mouse to look · WASD · Left-click / 1 Strike · Tab target"}
+          {juice.weapon === "bow"
+            ? juice.aiming
+              ? "Aiming · hold LMB to draw · release to shoot"
+              : "2 Bow · hold RMB aim · LMB draw/release · 1 Sword"
+            : locked
+              ? "RMB look · LMB combo Strike · 2 Bow · Tab target"
+              : "RMB look · LMB / 1 combo Strike · 2 Bow · Tab target"}
         </div>
       </div>
 

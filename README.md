@@ -55,14 +55,16 @@ That starts Vite and opens `http://localhost:5173`. Equivalent: `npm start` then
 
 | Input | Action |
 | --- | --- |
-| Hold **right mouse** | Look |
-| **Left click** | Strike (primary attack) |
-| **Wheel** | Zoom |
-| **Both mouse buttons** | Walk forward |
+| Hold **right mouse** | Look (sword) / Aim (bow) |
+| **Left click** | Sword: combo strike · Bow (while aiming): hold to draw |
+| Release **left click** | Bow: shoot |
+| **1** | Equip sword + strike |
+| **2** | Equip bow |
+| **Wheel** | Zoom (sword mode) |
+| **Both mouse buttons** | Walk forward (sword) |
 | WASD | Move |
 | Shift | Sprint |
 | Space | Jump |
-| **1** or F | Strike |
 | **Tab** | Target / cycle |
 | E | Talk, gather, mine, fish, jump pad |
 | 5 | Drink harbour tonic |

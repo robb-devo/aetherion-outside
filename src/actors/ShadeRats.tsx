@@ -6,6 +6,7 @@ import { registry, playerPose } from "../game/registry";
 import { surfaceY } from "../game/terrain";
 import { useGame } from "../game/store";
 import { sfx } from "../game/audio";
+import { scaledDt } from "../game/feel";
 
 const SPOTS: [number, number][] = [
   [28.5, 6.2],
@@ -20,13 +21,13 @@ function ShadeRat({ id, spawn }: { id: string; spawn: [number, number] }) {
   const home = useMemo(() => new THREE.Vector3(spawn[0], surfaceY(spawn[0], spawn[1]) + 0.2, spawn[1]), [spawn]);
   const pos = useRef(home.clone());
   const vel = useRef(new THREE.Vector3());
-  const hp = useRef(42);
+  const hp = useRef(55);
   const alive = useRef(true);
   const flash = useRef(0);
   const biteCd = useRef(1.2);
   const wanderT = useRef(Math.random() * 4);
   const wanderDir = useRef(Math.random() * Math.PI * 2);
-  const [hpUi, setHpUi] = useState(42);
+  const [hpUi, setHpUi] = useState(55);
   const [dead, setDead] = useState(false);
 
   useEffect(() => {
@@ -35,7 +36,7 @@ function ShadeRat({ id, spawn }: { id: string; spawn: [number, number] }) {
       name: "Shade-rat",
       getPos: () => pos.current.clone(),
       getHp: () => hp.current,
-      getMaxHp: () => 42,
+      getMaxHp: () => 55,
       alive: () => alive.current,
       hurt: (dmg, from) => {
         if (!alive.current) return false;
@@ -44,7 +45,7 @@ function ShadeRat({ id, spawn }: { id: string; spawn: [number, number] }) {
         setHpUi(Math.max(0, hp.current));
         const knock = pos.current.clone().sub(from).setY(0);
         if (knock.lengthSq() < 0.001) knock.set(1, 0, 0);
-        knock.normalize().multiplyScalar(3.2);
+        knock.normalize().multiplyScalar(5.2);
         vel.current.add(knock);
         if (hp.current <= 0) {
           alive.current = false;
@@ -56,7 +57,8 @@ function ShadeRat({ id, spawn }: { id: string; spawn: [number, number] }) {
     });
   }, [id]);
 
-  useFrame((_, dt) => {
+  useFrame((_, rawDt) => {
+    const dt = scaledDt(rawDt);
     if (!group.current) return;
     if (!alive.current) {
       group.current.scale.y = Math.max(0.02, group.current.scale.y - dt * 2.5);
@@ -134,7 +136,7 @@ function ShadeRat({ id, spawn }: { id: string; spawn: [number, number] }) {
       </mesh>
       <Html position={[0, 0.78, 0]} center distanceFactor={8} style={{ pointerEvents: "none" }}>
         <div style={{ width: 42, height: 5, background: "#2a1020", border: "1px solid #000" }}>
-          <div style={{ width: `${(hpUi / 42) * 100}%`, height: "100%", background: "#d45d6a" }} />
+          <div style={{ width: `${(hpUi / 55) * 100}%`, height: "100%", background: "#d45d6a" }} />
         </div>
       </Html>
     </group>

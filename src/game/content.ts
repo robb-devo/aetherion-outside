@@ -173,10 +173,10 @@ export const DISTANT_ISLES = [
 ];
 
 export const ABILITIES = [
-  { id: "strike", slot: 1, name: "Strike", icon: "⚔", key: "LMB / 1", cooldown: 0.7 },
-  { id: "interact", slot: 2, name: "Interact", icon: "✋", key: "E", cooldown: 0 },
-  { id: "sprint", slot: 3, name: "Sprint", icon: "◎", key: "⇧", cooldown: 0 },
-  { id: "jump", slot: 4, name: "Jump", icon: "▲", key: "Spc", cooldown: 0 },
+  { id: "strike", slot: 1, name: "Sword", icon: "⚔", key: "1", cooldown: 0.35 },
+  { id: "bow", slot: 2, name: "Bow", icon: "🏹", key: "2", cooldown: 0 },
+  { id: "interact", slot: 3, name: "Interact", icon: "✋", key: "E", cooldown: 0 },
+  { id: "sprint", slot: 4, name: "Sprint", icon: "◎", key: "⇧", cooldown: 0 },
   { id: "tonic", slot: 5, name: "Tonic", icon: "✚", key: "5", cooldown: 8 },
 ];
 
