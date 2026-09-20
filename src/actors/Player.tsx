@@ -22,14 +22,15 @@ const from = new THREE.Vector3();
 export function Player() {
   const body = useRef<RapierRigidBody>(null);
   const group = useRef<THREE.Group>(null);
-  const yaw = useRef(0.15);
-  const pitch = useRef(0.32);
+  const yaw = useRef(-0.08);
+  const pitch = useRef(0.18);
   const facing = useRef(0);
   const attackT = useRef(0);
   const cooldown = useRef(0);
   const grounded = useRef(true);
   const anim = useRef<AnimState>("idle");
   const interactLock = useRef(0);
+  const wantInteract = useRef(false);
   const { camera, gl } = useThree();
   const { rapier, world } = useRapier();
   const [, getKeys] = useKeyboardControls();
@@ -73,9 +74,10 @@ export function Player() {
       if (st.phase !== "playing") return;
       if (e.code === "Escape") {
         if (st.dialogNpc) st.dialogChoice("close");
-        else st.setPanel(st.panel ? null : "help");
+        else if (st.panel) st.setPanel(null);
         document.exitPointerLock();
       }
+      if (e.code === "KeyE") wantInteract.current = true;
       if (e.code === "KeyC") st.setPanel(st.panel === "skills" ? null : "skills");
       if (e.code === "KeyI" || e.code === "KeyB") st.setPanel(st.panel === "inventory" ? null : "inventory");
       if (e.code === "KeyH") st.setPanel(st.panel === "help" ? null : "help");
@@ -85,8 +87,8 @@ export function Player() {
   }, []);
 
   const spawn = useMemo(() => {
-    const x = 0.4;
-    const z = 2.2;
+    const x = 0.15;
+    const z = 1.15;
     return [x, surfaceY(x, z) + 1.35, z] as [number, number, number];
   }, []);
 
@@ -135,7 +137,7 @@ export function Player() {
     }
 
     if (translation.y < -3) {
-      rb.setTranslation({ x: 0.4, y: 5, z: 2.2 }, true);
+      rb.setTranslation({ x: 0.15, y: 5, z: 1.15 }, true);
       rb.setLinvel({ x: 0, y: 0, z: 0 }, true);
     }
 
@@ -154,7 +156,7 @@ export function Player() {
     const speed = sprint ? 7.4 : 4.35;
     wish.set(0, 0, 0);
     wish.addScaledVector(camDir, mz);
-    wish.addScaledVector(camRight, -mx);
+    wish.addScaledVector(camRight, mx);
     if (wish.lengthSq() > 0) wish.normalize();
 
     const vel = rb.linvel();
@@ -182,9 +184,9 @@ export function Player() {
     else anim.current = "idle";
 
     const look = camTarget.set(translation.x, translation.y + 1.32, translation.z);
-    const dist = sprint ? 8.3 : 7.15;
+    const dist = sprint ? 7.6 : 6.4;
     const ox = Math.sin(yaw.current) * Math.cos(pitch.current) * dist;
-    const oy = Math.sin(pitch.current) * dist + 1.35;
+    const oy = Math.sin(pitch.current) * dist + 1.05;
     const oz = Math.cos(yaw.current) * Math.cos(pitch.current) * dist;
     camPos.lerp(desiredCam.set(look.x + ox, look.y + oy, look.z + oz), 1 - Math.pow(0.0008, dt));
     camera.position.copy(camPos);
@@ -199,7 +201,7 @@ export function Player() {
     playerPose.yaw = yaw.current;
 
     from.set(translation.x, translation.y, translation.z);
-    const node = registry.nearestNode(from, 2.4);
+    const node = registry.nearestNode(from, 3.4);
     if (node) {
       st.setPrompt({
         kind: node.kind === "npc" ? "talk" : node.kind === "forage" ? "gather" : "jump",
@@ -211,7 +213,9 @@ export function Player() {
     }
 
     interactLock.current = Math.max(0, interactLock.current - dt);
-    if (!blocked && keys.interact && node && interactLock.current <= 0) {
+    const tapE = wantInteract.current;
+    wantInteract.current = false;
+    if (!blocked && (keys.interact || tapE) && node && interactLock.current <= 0) {
       interactLock.current = 0.28;
       if (node.kind === "npc") {
         document.exitPointerLock();
@@ -248,7 +252,7 @@ export function Player() {
     >
       <CapsuleCollider args={[0.42, 0.32]} position={[0, 0.74, 0]} />
       <group ref={group}>
-        <Adventurer anim="idle" animRef={anim} attackRef={attackT} />
+        <Adventurer anim="idle" animRef={anim} attackRef={attackT} scale={1.12} />
       </group>
     </RigidBody>
   );

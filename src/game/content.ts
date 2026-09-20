@@ -51,7 +51,7 @@ export const NPCS: NpcDef[] = [
     id: "corin",
     name: "Harbourmaster Corin",
     title: "Keeps the dusk ledgers",
-    position: [3.2, 0, -2.4],
+    position: [0.85, 0, -0.55],
     facing: Math.PI * 0.15,
     palette: { tunic: "#4d3a24", cloak: "#6e2b2b", hair: "#cfc3a4" },
     lines: [

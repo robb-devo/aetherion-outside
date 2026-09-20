@@ -1,5 +1,4 @@
 import { RigidBody, CuboidCollider } from "@react-three/rapier";
-import { Environment } from "@react-three/drei";
 import { EffectComposer, Bloom, Vignette, SMAA, ToneMapping } from "@react-three/postprocessing";
 import { ToneMappingMode } from "postprocessing";
 import { Birds, Clouds, DuskSky, Fireflies, TerrainMesh, Water } from "./atmosphere";
@@ -14,16 +13,16 @@ export function HarbourWorld() {
   return (
     <>
       <color attach="background" args={["#1a1028"]} />
-      <fog attach="fog" args={[COLORS.duskFog, 28, 115]} />
+      <fog attach="fog" args={[COLORS.duskFog, 38, 130]} />
       <DuskSky />
       <Clouds />
       <Birds />
-      <hemisphereLight args={["#ffc8a0", "#2a1838", 0.55]} />
-      <ambientLight intensity={0.28} color="#9aa0c8" />
+      <hemisphereLight args={["#ffc8a0", "#2a1838", 0.42]} />
+      <ambientLight intensity={0.18} color="#8a90b8" />
       <directionalLight
         castShadow
         position={[-28, 22, 36]}
-        intensity={1.65}
+        intensity={1.05}
         color="#ffb070"
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
@@ -34,7 +33,6 @@ export function HarbourWorld() {
         shadow-camera-top={40}
         shadow-camera-bottom={-40}
       />
-      <Environment files="/env/dusk.hdr" />
       <Water />
       <Fireflies />
       <RigidBody type="fixed" colliders="trimesh" friction={1.1}>

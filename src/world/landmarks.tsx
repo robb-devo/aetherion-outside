@@ -276,7 +276,7 @@ function Plaza() {
 
 function NoticeBoard() {
   return (
-    <group position={[1.6, surfaceY(1.6, -0.6), -0.6]}>
+    <group position={[-2.4, surfaceY(-2.4, -0.2), -0.2]}>
       <Box size={[1.8, 1.6, 0.12]} color="#5a321c" position={[0, 1.3, 0]} />
       <Box size={[1.5, 1.2, 0.04]} color="#e8d2a6" position={[0, 1.35, 0.08]} />
       <Box size={[0.12, 2.0, 0.12]} color={COLORS.woodDark} position={[-0.85, 1.0, 0]} />

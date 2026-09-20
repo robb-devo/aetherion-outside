@@ -338,7 +338,10 @@ function HelpBody() {
         <b>I</b> Inventory
       </div>
       <div>
-        <b>H / Esc</b> This primer
+        <b>H</b> Primer
+      </div>
+      <div>
+        <b>Esc</b> Close panels
       </div>
       <div>Quest bang lives over Harbourmaster Corin.</div>
     </div>

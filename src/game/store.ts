@@ -76,7 +76,10 @@ export const useGame = create<GameState>((set, get) => ({
   player: { x: 0, z: 2, yaw: 0 },
   locked: false,
 
-  enterWorld: () => set({ phase: "playing", panel: "help" }),
+  enterWorld: () => {
+    set({ phase: "playing", panel: null });
+    get().toast("Harbourmaster Corin wants a word.", "info");
+  },
   setLocked: (locked) => set({ locked }),
   setPanel: (panel) => set({ panel, dialogNpc: panel ? get().dialogNpc : get().dialogNpc }),
   setPrompt: (prompt) => set({ prompt }),

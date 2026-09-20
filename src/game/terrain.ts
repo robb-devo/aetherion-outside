@@ -47,7 +47,7 @@ export function colorAt(x: number, z: number, y: number) {
   if (y < 0.35) c.set(COLORS.sand);
   else if (y > 3.4) c.set("#6f7a52");
   else c.set(COLORS.grass);
-  if (r < 14 && Math.hypot(x, z + 3.5) < 12) c.set(COLORS.stone);
+  if (r < 14 && Math.hypot(x, z + 3.5) < 12) c.set("#8d8070");
   const wr = Math.hypot(x - 22, z - 2);
   if (wr < 8) c.lerp(new THREE.Color("#8a7b68"), 0.45);
   const n = fbm(x * 0.2, z * 0.2);
